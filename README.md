@@ -10,7 +10,7 @@ Power a shelf of 3.5" SATA hard drives (a JBOD) from two industrial **Mean Well*
 | | |
 |---|---|
 | **Status** | Design complete, not yet built. See [Project status](#project-status). |
-| **First build** | 8 drives on one Jonsbo N3 backplane |
+| **First build** | 8 drives on one Jonsbo N3 backplane: old test drives first, then WD Ultrastar DC HC530 14 TB |
 | **12 V supply** | Mean Well RSP-200-12 (16.7 A): 61 % load at spin-up |
 | **5 V supply** | Mean Well LRS-150F-5 (22 A): 17 % load |
 | **Branch fuses** | 7.5 A on each +12 V lead, 5 A on each +5 V lead |
@@ -33,7 +33,7 @@ Read the documents in this order:
 
 ## Recalculate for your own drives
 
-The figures in these documents assume **1.27 A at 12 V spin-up, 0.40 A at 12 V idle and 0.47 A at 5 V per drive**. Check your drive's datasheet. If its numbers differ, or you want a different drive count, run the calculator (Python 3, no dependencies):
+The figures in these documents are for the **WD Ultrastar DC HC530 14 TB**: **1.27 A at 12 V spin-up, 0.40 A at 12 V idle and 0.47 A at 5 V per drive**. For any other drive, check its datasheet. The label only shows running current, not the spin-up peak. If its numbers differ, or you want a different drive count, run the calculator (Python 3, no dependencies):
 
 ```sh
 python3 tools/jbod_power.py                               # the 8-drive build

@@ -4,6 +4,8 @@ How the system fits together, and why it is built this way.
 
 ## The idea
 
+The production drives are **WD Ultrastar DC HC530 14 TB** (SATA, 7200 rpm). Testing uses old, cheap, low-capacity drives, so a mistake costs nothing important. See [test drives](05-commissioning-checklist.md#e-first-spin-up-test-drives) for why they need a check first.
+
 A hard drive needs two supplies: **+12 V** for the spindle motor and **+5 V** for the logic board. A JBOD backplane like the Jonsbo N3 takes both through two 4-pin Molex connectors and spreads them to all its bays.
 
 This design uses one dedicated Mean Well supply per voltage:
@@ -28,6 +30,7 @@ Every wire, in the colour you'll actually use:
 - **Blue Sea 5026 fuse block.** A common +12 V bus with up to 12 blade-fuse positions, plus a negative bus in the same housing. Each Molex lead gets its own fuse, so a shorted pigtail blows only its own fuse.
 - **5 V fused separately.** The fuse block has a single positive bus, so it can carry only one voltage. The 5 V leads use two inline blade-fuse holders off a lever-nut split instead.
 - **Both Molex headers on one backplane come from the same pair of supplies.** On the Jonsbo N3 both headers feed the same internal 12 V and 5 V copper planes, so the current splits roughly evenly between them. **Never** feed the two headers of one backplane from two different supplies: their outputs would be tied together and would fight each other.
+- **Power Disable (PWDIS) is not an issue.** Enterprise SATA drives like the HC530 stay switched off if 3.3 V reaches pin 3 of their SATA power connector. The backplane is fed through 4-pin Molex, which carries no 3.3 V, so this build avoids the problem. It only matters if you power a drive another way, for example with an ATX supply's SATA cables.
 - **Ground bond to the server.** Mean Well supplies have isolated outputs, which means their V− terminal is not connected to earth, so the JBOD's 0 V would otherwise float relative to the server. The bond wire gives the drives and the SATA controller the same 0 V reference. Then the SATA cable ground wires never have to carry an offset current, and a static or fault charge has a proper path.
 
 ### What protects what

@@ -4,15 +4,19 @@ Load, fuse and wire sizing for the 8-drive build. To redo any of this for a diff
 
 ## Assumptions
 
-| Per 3.5″ drive | Value | Notes |
+The production drive is the **WD Ultrastar DC HC530 14 TB SATA** (`WUH721414ALE6L4`). The figures below are its datasheet values:
+
+| Per drive | Value | Notes |
 |---|---|---|
-| 12 V spin-up current | **1.27 A** (15.2 W) | Lasts about 5–10 s from power-on |
-| 12 V idle / operating current | **0.40 A** (4.8 W) | Typical range is 0.35–0.45 A |
-| 5 V current | **0.47 A** (2.4 W) | Treated as constant |
+| 12 V spin-up current | **1.27 A** (15.2 W) | Peak, from the HC530 OEM spec. Lasts about 5–10 s from power-on. |
+| 12 V idle / operating current | **0.40 A** (4.8 W) | Conservative. The datasheet gives ≈ 5.5 W idle and ≈ 6 W operating for the whole drive, both rails together. |
+| 5 V current | **0.47 A** (2.4 W) | Peak, from the HC530 OEM spec. Treated as constant. |
 | Derating target | **75 %** of the PSU's rated output | Keeps the supplies cool and long-lived |
 
 > [!IMPORTANT]
-> These are typical 7200 rpm figures. **Look up your drives' datasheet.** High-capacity helium drives often list 1.8–2.0 A at 12 V spin-up, which changes everything below.
+> **The drive label shows running current, not spin-up current.** The HC530 label says "5VDC 0.44A, 12VDC 0.57A", but it draws 1.27 A at 12 V while spinning up. Size the supply and fuses from the datasheet's *startup* figure.
+>
+> If you use a different drive, look up its datasheet and run `python3 tools/jbod_power.py --spinup-12v <amps> --logic-5v <amps>`. Older and desktop 7200 rpm drives often need **2–2.8 A** at 12 V to spin up.
 
 ## Load: 8 drives
 

@@ -9,7 +9,7 @@ This design has **not been verified yet**. These measurements are what will veri
 **Date:**
 **Who:**
 **Build:** (e.g. 8 drives, RSP-200-12 + LRS-150F-5, 1× Jonsbo N3)
-**Drives:** (model × count; spin-up and idle current from the datasheet)
+**Drives:** (model × count; spin-up and idle current from the datasheet. Test drives or production HC530s?)
 **Ambient temperature:**
 
 ### No-load voltages (after trimming)

@@ -58,10 +58,19 @@ Measure at the **pigtail connector** with the multimeter in DC V:
 
 - [ ] Switch off, **unplug**, and wait 1 minute until both LEDs are dark
 
-## E. First spin-up (8 test drives)
+## E. First spin-up (test drives)
+
+> [!WARNING]
+> **Check your test drives first.** Old, cheap drives are ideal for testing, but many draw far more at spin-up than the HC530's 1.27 A. Look for "startup" or "spin-up" current in each model's datasheet (the label only shows running current) and run:
+>
+> ```sh
+> python3 tools/jbod_power.py --spinup-12v 2.5   # replace 2.5 with your test drive's figure
+> ```
+>
+> Eight drives at 2.5 A need 20 A, more than the RSP-200-12's 16.7 A. The supply would shut down and restart over and over during spin-up. If you don't know the figure, **start with 4 drives**, measure the peak, then add more.
 
 1. [ ] Plug both pigtails into the backplane's **A1** and **A2** headers
-2. [ ] Insert the test drives
+2. [ ] Insert the test drives (4 first if you don't know their spin-up current)
 3. [ ] Connect the **server bond wire** to the server chassis. The server can stay off for this test.
 4. [ ] Set the clamp meter to **DC A, 20 A range** and **zero it** (press ZERO with the jaws closed and away from wires). Clamp it around the **yellow 2.5 mm² wire from the RSP-200-12 to the fuse block**. That one wire carries the whole 12 V load.
 5. [ ] Put the multimeter on a spare drive's power connector, or on the back of pigtail A1 pins 1–2
@@ -111,11 +120,14 @@ flowchart TD
     S --> S1["Feel for warm crimps or fuses and re-crimp.<br>Total current near 16.7 A? Too many drives."]
 
     Q --> H["Supply clicks on and off"]
-    H --> H1["Overload or short protection.<br>Disconnect the backplane and retest unloaded."]
+    H --> H1["Overload or short protection.<br>Only at spin-up? Test drives draw too much:<br>try 4 drives. Also unloaded? Look for a short."]
 
     Q --> D["Drive missing or CRC errors"]
     D --> D1["Ground bond connected? Drive spun up?<br>Reseat or swap the SATA cable."]
 
+    Q --> N["One drive never spins up"]
+    N --> N1["Enterprise drive (e.g. HC530) with Power Disable:<br>3.3 V on SATA power pin 3 keeps it off.<br>Molex has no 3.3 V, so check any SATA power adapters."]
+
     classDef sym fill:#fff4d6,stroke:#b07d00,color:#1b1b1a
-    class L,V,F,S,H,D sym
+    class L,V,F,S,H,D,N sym
 ```
