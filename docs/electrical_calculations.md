@@ -32,6 +32,31 @@ $$\text{Total Combined Peak Power} = 121.9\text{ W} + 18.8\text{ W} = \mathbf{14
 | **+12 V Spindle** | **10.16 A** | **Mean Well LRS-200-12** | 17.0 A (204.0 W) | **59.6%** | **40.4% Safety Margin** |
 | **+5 V Logic** | **3.76 A** | **Mean Well LRS-150F-5** | 22.0 A (110.0 W) | **17.1%** | **82.9% Safety Margin** |
 
+```mermaid
+flowchart TD
+    subgraph Grid ["Grid & Power Conversion"]
+        AC["230 VAC Swiss Mains"] --> LRS12["Mean Well LRS-200-12<br>Rated: 204W / 17.0A max"]
+        AC --> LRS5["Mean Well LRS-150F-5<br>Rated: 110W / 22.0A max"]
+    end
+
+    subgraph Rails ["DC Rails (Spin-Up Surge)"]
+        LRS12 -->|10.16A peak (59.6% load)| Split12["12V Power Plane Split"]
+        LRS5 -->|3.76A peak (17.1% load)| Split5["5V Power Plane Split"]
+    end
+
+    subgraph Fuses ["Branch Fuse Protection"]
+        Split12 -->|5.08A| F1["Molex A1 Fuse (7.5A / 10A)"]
+        Split12 -->|5.08A| F2["Molex A2 Fuse (7.5A / 10A)"]
+        Split5 -->|1.88A| F3["Molex A1 Fuse (5A)"]
+        Split5 -->|1.88A| F4["Molex A2 Fuse (5A)"]
+    end
+
+    subgraph Load ["8x 3.5\" SATA HDDs"]
+        F1 & F2 --> Spindles["8x Spindle Motors<br><i>(1.27A peak per drive)</i>"]
+        F3 & F4 --> Logic["8x Logic Boards & LEDs<br><i>(0.47A peak per drive)</i>"]
+    end
+```
+
 * **Analysis:** Industrial power supplies are rated for continuous 24/7 duty at $100\%$ capacity. Operating at $\approx 60\%$ peak spin-up and $<25\%$ idle means the power supplies will generate very little heat, maintain high MTBF, and run completely silent without aggressive fan curves.
 
 ---

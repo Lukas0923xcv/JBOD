@@ -31,16 +31,40 @@ Step-by-step assembly, wiring diagrams, and pre-flight commissioning checklist f
 
 ## 🔌 Phase 2: AC Mains Wiring (230 VAC)
 
-```
-[Schurter DD11 Inlet]
-   Pin L (Live)    ───> [WAGO 221 (L)] ──┬──> LRS-200-12 (Terminal L)
-                                         └──> LRS-150F-5 (Terminal L)
+```mermaid
+flowchart LR
+    subgraph Inlet ["Schurter DD11 Panel Inlet"]
+        direction TB
+        Plug["Swiss Typ 12 Wall Plug"] --> SW["2-Pole DPST Rocker Switch"]
+        SW --> Fuse["2x 5x20mm 6.3A Ceramic Fuses"]
+        Fuse --> L_out["Terminal L (Faston 6.3)"]
+        SW --> N_out["Terminal N (Faston 6.3)"]
+        Inlet_PE["Ground Pin PE ⏚"]
+    end
 
-   Pin N (Neutral) ───> [WAGO 221 (N)] ──┬──> LRS-200-12 (Terminal N)
-                                         └──> LRS-150F-5 (Terminal N)
+    subgraph WAGO ["WAGO 221-413 Lever Nuts"]
+        W_L["WAGO 221 (Live - L)<br><i>3-conductor</i>"]
+        W_N["WAGO 221 (Neutral - N)<br><i>3-conductor</i>"]
+        W_PE["WAGO 221 (Earth - PE)<br><i>3-conductor</i>"]
+    end
 
-   Pin PE (Earth)  ───> [WAGO 221 (PE)] ─┬──> LRS-200-12 (Terminal PE ⏚)
-                                         └──> LRS-150F-5 (Terminal PE ⏚)
+    subgraph PSUs ["Power Supply AC Terminals"]
+        LRS12["Mean Well LRS-200-12<br>Terminals: L | N | PE ⏚"]
+        LRS5["Mean Well LRS-150F-5<br>Terminals: L | N | PE ⏚"]
+    end
+
+    L_out -->|2.5 mm² Black/Brown| W_L
+    N_out -->|2.5 mm² Blue| W_N
+    Inlet_PE -->|2.5 mm² Green/Yellow| W_PE
+
+    W_L -->|2.5 mm²| LRS12
+    W_L -->|2.5 mm²| LRS5
+
+    W_N -->|2.5 mm²| LRS12
+    W_N -->|2.5 mm²| LRS5
+
+    W_PE -->|2.5 mm² Green/Yellow| LRS12
+    W_PE -->|2.5 mm² Green/Yellow| LRS5
 ```
 
 1. **Inlet Preparation:** Install two 6.3 A or 10 A slow-blow (5x20 mm) ceramic fuses into the Schurter `4301.1401` fusedrawer and slide it into the Schurter `DD11` inlet.
@@ -57,6 +81,17 @@ Step-by-step assembly, wiring diagrams, and pre-flight commissioning checklist f
 
 ### 1. Pre-Crimped Molex Pigtails
 Take the two **InLine 33445** Molex 4-pin Y-cables. Cut them cleanly in half. Strip 8 mm of insulation from the four wires on each female connector pigtail:
+
+```mermaid
+flowchart LR
+    subgraph Molex ["Standard 4-Pin LP4 Female Connector (Backplane Input)"]
+        direction LR
+        P1["Pin 1<br><b>+12V DC</b><br>(Yellow Wire)<br><i>Spindle Power</i>"] --- P2["Pin 2<br><b>GND</b><br>(Black Wire)<br><i>12V Return</i>"]
+        P2 --- P3["Pin 3<br><b>GND</b><br>(Black Wire)<br><i>5V Return</i>"]
+        P3 --- P4["Pin 4<br><b>+5V DC</b><br>(Red Wire)<br><i>Logic Power</i>"]
+    end
+```
+
 * **Pin 1 (Yellow):** +12 V
 * **Pin 2 (Black):** Ground
 * **Pin 3 (Black):** Ground
@@ -85,6 +120,26 @@ Take the two **InLine 33445** Molex 4-pin Y-cables. Cut them cleanly in half. St
 
 > [!IMPORTANT]
 > **Never connect hard drives on initial power-on.** Always measure and tune the unloaded voltages first.
+
+```mermaid
+flowchart TD
+    Start(["Pre-Flight Commissioning Start"]) --> S1["1. Visual & Mechanical Check<br><i>(Check torque on all M4/M5 screws, no loose copper strands)</i>"]
+    S1 --> S2{"2. LRS-200-12 Slide Switch<br>set to 230V?"}
+    S2 -- No --> Fix230["⚠️ STOP: Set red switch to 230V!"] --> S2
+    S2 -- Yes --> S3["3. PE Ground Continuity Test<br><i>(Measure resistance between inlet ground pin & PSU chassis)</i>"]
+    S3 --> S3_Check{"Resistance < 0.5 Ω?"}
+    S3_Check -- No --> FixPE["⚠️ Check PE crimps & ground bonding!"] --> S3
+    S3_Check -- Yes --> S4["4. First Power-On (NO DRIVES ATTACHED)<br><i>(Flip Schurter rocker switch ON)</i>"]
+    S4 --> S4_LED{"Both green DC-OK LEDs lit?"}
+    S4_LED -- No --> FixAC["Check mains fuses & AC wiring!"] --> S4
+    S4_LED -- Yes --> S5["5. Voltage Calibration with DMM<br>• Measure Molex Pin 1 (+12V) vs GND<br>• Measure Molex Pin 4 (+5V) vs GND"]
+    S5 --> S6["6. Trim Potentiometers<br>• Adjust SVR1 on LRS-200-12 to 12.15V<br>• Adjust VR1 on LRS-150F-5 to 5.15V"]
+    S6 --> S7["7. Power OFF & Discharge (Wait 15s)"]
+    S7 --> S8["8. Connect Jonsbo Backplane & 8x Test Drives"]
+    S8 --> S9["9. Attach Uni-T UT210E Clamp Meter around +12V Wire"]
+    S9 --> S10["10. Live Spin-Up Test<br><i>(Power ON, observe 10.2A peak & voltage stability)</i>"]
+    S10 --> Pass(["✅ Commissioning Complete & Verified"])
+```
 
 1. [ ] **Visual Inspection:** Verify no stray copper strands are bridging terminals. Check that all ring terminal screws are torqued down snugly.
 2. [ ] **230 V Check:** Verify LRS-200-12 slide switch is on **230 V**.

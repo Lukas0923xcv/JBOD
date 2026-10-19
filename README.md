@@ -118,6 +118,65 @@ flowchart TD
 
 ---
 
+## ⚖️ ATX PSU vs. Industrial Mean Well Architecture
+
+Why build an external industrial power system instead of using an off-the-shelf consumer ATX power supply?
+
+```mermaid
+flowchart LR
+    subgraph ATX ["Standard Consumer ATX Power Supply"]
+        direction TB
+        A1["Shared Multi-Rail Transformer"] --> A2["Cross-load instability<br><i>(5V/3.3V load required to stabilize 12V)</i>"]
+        A2 --> A3["Unused bulky harness<br><i>(24-pin ATX, PCIe 8-pin, EPS)</i>"]
+        A3 --> A4["Short/OCP trips shut down entire PSU<br><i>All drives drop offline at once</i>"]
+        A4 --> A5["Fixed 12.0V / 5.0V<br><i>Voltage sags below spec under cable load</i>"]
+    end
+
+    subgraph MW ["Industrial Mean Well Modular Design"]
+        direction TB
+        M1["Independent Dedicated PSUs<br><i>(12V Spindle + 5V Logic)</i>"] --> M2["Zero cross-regulation issues<br><i>100% capacity available per rail</i>"]
+        M2 --> M3["Streamlined DC bus wiring<br><i>Clean screw terminals & custom gauges</i>"]
+        M3 --> M4["Individual branch fusing<br><i>A single shorted drive blows only its fuse</i>"]
+        M4 --> M5["Precision adjustable trimpots<br><i>Set 12.15V & 5.15V to cancel cable loss</i>"]
+    end
+```
+
+---
+
+## ⏱️ Power Sequencing & Safe Boot Order
+
+Because external JBOD drives must be spinning and ready before the host operating system or HBA scans the PCIe bus, follow this strict startup and shutdown order:
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor User as Operator / Admin
+    participant Mains as Mains Switch (Schurter DD11)
+    participant PSUs as Mean Well PSUs (12V & 5V)
+    participant HDDs as 8x SATA Hard Drives
+    participant Server as Host Server / Motherboard
+
+    Note over User,Server: === SAFE STARTUP SEQUENCE ===
+    User->>Mains: Flip JBOD Mains Switch ON
+    Mains->>PSUs: 230 VAC Energized (Inrush handled)
+    PSUs->>HDDs: 12V (Spindle) & 5V (Logic) Applied
+    Note over HDDs: Drives draw 10.2A peak surge,<br>accelerating platters to 7200 RPM
+    HDDs-->>HDDs: Spin-up completes (8–10 seconds)
+    Note over HDDs: Platters at speed, SATA PHY active
+    User->>Server: Power ON Host Server
+    Server->>HDDs: BIOS/UEFI & OS scan SATA bus
+    HDDs-->>Server: Drive enumeration successful, arrays mount
+
+    Note over User,Server: === SAFE SHUTDOWN SEQUENCE ===
+    User->>Server: Issue OS Shutdown / Unmount Pools
+    Server->>HDDs: Flush disk write cache & park heads
+    Server->>Server: Host Server Powers OFF
+    User->>Mains: Flip JBOD Mains Switch OFF
+    Mains->>PSUs: AC Power cut, DC rails safely collapse
+```
+
+---
+
 ## ⚡ Key Engineering Takeaways
 
 1. **Why Not Consumer ATX PSUs?**  
