@@ -9,6 +9,9 @@ This is the digitized original design worksheet: the drive power figures, the su
 > - "36 HDDs per LRS-150F-5 at 75 %" is slightly over: the limit is **35**.
 > - Prices are from the original worksheet and are out of date. See the [bill of materials](../02-bill-of-materials.md).
 > - The fuses are now fixed at 7.5 A (12 V) and 5 A (5 V). The "7.5 A / 10 A" choice below is superseded.
+> - The 6 mm² server ground bond is now 2.5 mm², and the JBOD's 0 V is also bonded to PE. See [Electrical calculations](../03-electrical-calculations.md#ground-bond-to-the-server).
+> - The bond does not "prevent ground loops" (note 3 below): it gives the drives and the host one common 0 V reference.
+> - The sheet has no mains-side design (enclosure, earthing, inlet) at all. See the [assembly guide](../04-assembly-guide.md).
 
 ---
 

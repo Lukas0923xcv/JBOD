@@ -1,0 +1,22 @@
+name: Check docs
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Links, figures and diagrams
+        run: python3 tools/check_repo.py
+      - name: Calculator smoke test
+        run: |
+          python3 tools/jbod_power.py
+          python3 tools/jbod_power.py --drives 30 --psu12 RSP-500-12 --stagger 8
+          python3 tools/jbod_power.py --spinup-12v 2.5
+          ! python3 tools/jbod_power.py --headers 0
