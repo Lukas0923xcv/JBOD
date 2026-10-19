@@ -1,0 +1,51 @@
+# Changelog
+
+## 2026-10-19: Documentation overhaul
+
+### Structure
+
+- Docs are now numbered in reading order (`docs/01-…` to `docs/06-…`), and the README is a short landing page with a reading path.
+- **Removed** `jbod_power_parts_list.md` and `jbod_power_procurement_guide.md` from the repo root. Both duplicated the procurement guide, and their links pointed to a local `file:///c:/…` path. The bill of materials is now in one place: [`docs/02-bill-of-materials.md`](docs/02-bill-of-materials.md).
+- The full liability disclaimer moved from the README into [`SAFETY.md`](SAFETY.md), alongside practical safety rules.
+- **New:** [`docs/05-commissioning-checklist.md`](docs/05-commissioning-checklist.md), a printable step-by-step checklist with spaces for readings.
+- **New:** [`docs/test-log.md`](docs/test-log.md), a template for recording measurements so the design can be verified.
+- **New:** [`docs/06-scaling-up.md`](docs/06-scaling-up.md), split out of the calculations doc and expanded.
+- **New:** [`tools/jbod_power.py`](tools/jbod_power.py), a calculator for load, PSU utilisation and fuse sizing for any drive count.
+- The original worksheet moved to `docs/reference/` with a warning listing its known errors.
+
+### Corrections
+
+| Was | Now | Why |
+|---|---|---|
+| RSP-500-12 powers "30 drives at 75 % load" | 24 drives at 75 % (30 drives = 91 %) | 30 × 1.27 A = 38.1 A of 41.7 A |
+| RSP-200-12 "10 drives" at 75 % | 9 drives (10 = 76 %) | 10 × 1.27 A = 12.7 A of 16.7 A |
+| LRS-150F-5 "36 drives" at 75 % | 35 drives | 36 × 0.47 A = 16.9 A of 22 A = 77 % |
+| LRS-150F-5 "with active PFC" | No active PFC | The LRS series has no PFC; only the RSP supplies do |
+| Clamp meter on the "2.000 A range" to measure a ~10 A surge | 20 A range, clamped on the single PSU-to-fuse-block feed wire | 10 A would overrange a 2 A range |
+| "Total ~CHF 295, or ~345 with the clamp meter" | ≈ CHF 250, ≈ CHF 300 with the clamp meter | The CHF 295 figure already included the meter |
+| Drives receive "exactly 5.00 V and 12.00 V" (README) vs "12.05 V / 5.05 V" (calculations) | One set of figures: ≈ 11.95–12.05 V and ≈ 5.05–5.10 V | The two documents contradicted each other |
+| Trim "at the PSU terminals" (README) vs at the Molex (checklist) | Trim at the Molex pigtail, no load | Made consistent |
+| +12 V wire listed as **black** | Yellow for +12 V, red for +5 V, black only for ground | Black on a positive rail is a wiring mistake waiting to happen |
+| AC wiring used black/blue wire that wasn't in the BOM | Brown L / blue N / green-yellow PE, all in the BOM | IEC colours; BOM matches the guide |
+| 5 V "ATO fuses" in the BOM but "inline fuse holders" in the wiring guide, with no holders listed | Inline blade fuse holders added to the BOM | BOM matched to the guide |
+| Faston receptacles for the inlet used but not listed | Added to the BOM | |
+| 8 mm socket for "M5" studs | 3/8″ nut driver; studs are #10-32 (M5 ring fits), branch screws #8-32 (M4 ring fits) | Blue Sea 5026 uses imperial hardware |
+| "7.5 A or 10 A" 12 V fuse | 7.5 A | One answer; 7.5 A is the smallest rating with ≥ 1.25× margin |
+| "6.3 A or 10 A" inlet fuses | 6.3 A T | One answer |
+| "Order 2 Y-cables, cut to make 2 pigtails" | One Y-cable gives both pigtails; the second is a spare | Each Y-cable has two female ends |
+| "Heat gun or lighter" | Heat gun | A lighter scorches adhesive heat shrink |
+| "Industrial PSUs are rated for 100 % continuous duty" alongside a 75 % derating rule | The derating rule only | Contradictory |
+| ATX comparison claimed all ATX PSUs need dummy loads and sag below spec | Balanced comparison | Only true of older group-regulated units |
+| Server ground bond "prevents ground loops" | Establishes a common 0 V reference for isolated Mean Well outputs | More accurate |
+
+### Design changes
+
+- **6 mm² wire dropped for the 8-drive build.** All DC feeds, returns and the server bond now use 2.5 mm² (rated about 24 A; the largest current here is 10.2 A). That means one wire size, fewer terminal types, and no oversized ring terminals on the small PSU terminal blocks. 6 mm² comes back in the 24-drive scale-up, where the 12 V feed carries about 30 A.
+- Added a pigtail pin-out continuity check, and a PE continuity check for metal brackets or enclosures.
+
+### Still to verify (needs the datasheets or the real parts)
+
+- Voltage-adjust range of the RSP-200-12 and RSP-500-12 (sources disagree between ±10 % and 10.0–13.2 V). Not critical, since the trim target of 12.15 V is within either range.
+- PSU terminal screw size, which decides the fork/ring terminal size.
+- Length of the Schurter 6051.2015 cord (2.5 m or 5 m).
+- Panel cutout size of the Schurter DD11.

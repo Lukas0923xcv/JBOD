@@ -1,6 +1,14 @@
 # Original Power Calculations & Schematic (Digitized from Worksheet)
 
-This document is the digitized, clean markdown version of the original design worksheet, containing the raw drive power metrics, power supply sizing tables, and the original busbar wiring schematics.
+This is the digitized original design worksheet: the drive power figures, the supply sizing table and the original busbar schematics. It is kept unchanged as a historical record.
+
+> [!WARNING]
+> **This sheet has known errors. The numbered documents in `docs/` take precedence.**
+> - "30 HDDs per RSP-500-12 at 75 %" is wrong: 30 drives is 91 % at spin-up. The 75 % limit is **24** drives. See [Scaling up](../06-scaling-up.md).
+> - "10 HDDs per RSP-200-12 at 75 %" is slightly over: 10 drives is 76 %. The limit is **9**.
+> - "36 HDDs per LRS-150F-5 at 75 %" is slightly over: the limit is **35**.
+> - Prices are from the original worksheet and are out of date. See the [bill of materials](../02-bill-of-materials.md).
+> - The fuses are now fixed at 7.5 A (12 V) and 5 A (5 V). The "7.5 A / 10 A" choice below is superseded.
 
 ---
 
