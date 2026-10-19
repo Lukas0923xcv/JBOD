@@ -1,0 +1,13 @@
+# Windows / OS files
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Editor / IDE artifacts
+.vscode/
+.idea/
+*.swp
+*~
+
+# Temporary test logs
+*.log
