@@ -39,21 +39,21 @@ flowchart TD
         AC --> LRS5["Mean Well LRS-150F-5<br>Rated: 110W / 22.0A max"]
     end
 
-    subgraph Rails ["DC Rails (Spin-Up Surge)"]
-        LRS12 -->|10.16A peak (59.6% load)| Split12["12V Power Plane Split"]
-        LRS5 -->|3.76A peak (17.1% load)| Split5["5V Power Plane Split"]
+    subgraph Rails ["DC Rails - Spin-Up Surge"]
+        LRS12 -->|"10.16A peak"| Split12["12V Power Plane Split<br>59.6% load"]
+        LRS5 -->|"3.76A peak"| Split5["5V Power Plane Split<br>17.1% load"]
     end
 
     subgraph Fuses ["Branch Fuse Protection"]
-        Split12 -->|5.08A| F1["Molex A1 Fuse (7.5A / 10A)"]
-        Split12 -->|5.08A| F2["Molex A2 Fuse (7.5A / 10A)"]
-        Split5 -->|1.88A| F3["Molex A1 Fuse (5A)"]
-        Split5 -->|1.88A| F4["Molex A2 Fuse (5A)"]
+        Split12 -->|"5.08A"| F1["Molex A1 Fuse - 7.5A / 10A"]
+        Split12 -->|"5.08A"| F2["Molex A2 Fuse - 7.5A / 10A"]
+        Split5 -->|"1.88A"| F3["Molex A1 Fuse - 5A"]
+        Split5 -->|"1.88A"| F4["Molex A2 Fuse - 5A"]
     end
 
-    subgraph Load ["8x 3.5\" SATA HDDs"]
-        F1 & F2 --> Spindles["8x Spindle Motors<br><i>(1.27A peak per drive)</i>"]
-        F3 & F4 --> Logic["8x Logic Boards & LEDs<br><i>(0.47A peak per drive)</i>"]
+    subgraph Load ["8x 3.5 Inch SATA HDDs"]
+        F1 & F2 --> Spindles["8x Spindle Motors<br>1.27A peak per drive"]
+        F3 & F4 --> Logic["8x Logic Boards & LEDs<br>0.47A peak per drive"]
     end
 ```
 

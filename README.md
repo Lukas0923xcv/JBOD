@@ -85,20 +85,20 @@ flowchart TD
     end
 
     subgraph Distribution ["DC Distribution & Fusing"]
-        PSU12 -->|+12V (2.5mm²)| FuseBlock["Blue Sea 5026 Fuse Block<br>Positive Stud (M5)"]
-        PSU12 -->|V- (6mm²)| NegBus["Blue Sea 5026<br>Negative Ground Bus"]
-        PSU5 -->|V- (6mm²)| NegBus
+        PSU12 -->|"+12V (2.5mm²)"| FuseBlock["Blue Sea 5026 Fuse Block<br>Positive Stud (M5)"]
+        PSU12 -->|"V- (6mm²)"| NegBus["Blue Sea 5026<br>Negative Ground Bus"]
+        PSU5 -->|"V- (6mm²)"| NegBus
 
-        PSU5 -->|+5V (2.5mm²)| W_5V["WAGO 221 (+5V Split)"]
+        PSU5 -->|"+5V (2.5mm²)"| W_5V["WAGO 221 (+5V Split)"]
 
-        FuseBlock -->|Fuse 1 (7.5A)| M1_12["Molex A1 (Pin 1: +12V)"]
-        FuseBlock -->|Fuse 2 (7.5A)| M2_12["Molex A2 (Pin 1: +12V)"]
+        FuseBlock -->|"Fuse 1 (7.5A)"| M1_12["Molex A1 (Pin 1: +12V)"]
+        FuseBlock -->|"Fuse 2 (7.5A)"| M2_12["Molex A2 (Pin 1: +12V)"]
 
-        W_5V -->|Inline Fuse 5A| M1_5["Molex A1 (Pin 4: +5V)"]
-        W_5V -->|Inline Fuse 5A| M2_5["Molex A2 (Pin 4: +5V)"]
+        W_5V -->|"Inline Fuse 5A"| M1_5["Molex A1 (Pin 4: +5V)"]
+        W_5V -->|"Inline Fuse 5A"| M2_5["Molex A2 (Pin 4: +5V)"]
 
-        NegBus -->|GND (18 AWG)| M1_GND["Molex A1 (Pins 2 & 3: GND)"]
-        NegBus -->|GND (18 AWG)| M2_GND["Molex A2 (Pins 2 & 3: GND)"]
+        NegBus -->|"GND (18 AWG)"| M1_GND["Molex A1 (Pins 2 & 3: GND)"]
+        NegBus -->|"GND (18 AWG)"| M2_GND["Molex A2 (Pins 2 & 3: GND)"]
     end
 
     subgraph Host ["Server / Ground Reference"]

@@ -123,22 +123,22 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-    Start(["Pre-Flight Commissioning Start"]) --> S1["1. Visual & Mechanical Check<br><i>(Check torque on all M4/M5 screws, no loose copper strands)</i>"]
+    Start(["Pre-Flight Commissioning Start"]) --> S1["1. Visual and Mechanical Check<br><i>Torque all M4/M5 screws, no loose copper strands</i>"]
     S1 --> S2{"2. LRS-200-12 Slide Switch<br>set to 230V?"}
-    S2 -- No --> Fix230["⚠️ STOP: Set red switch to 230V!"] --> S2
-    S2 -- Yes --> S3["3. PE Ground Continuity Test<br><i>(Measure resistance between inlet ground pin & PSU chassis)</i>"]
-    S3 --> S3_Check{"Resistance < 0.5 Ω?"}
-    S3_Check -- No --> FixPE["⚠️ Check PE crimps & ground bonding!"] --> S3
-    S3_Check -- Yes --> S4["4. First Power-On (NO DRIVES ATTACHED)<br><i>(Flip Schurter rocker switch ON)</i>"]
+    S2 -- No --> Fix230["STOP: Set red switch to 230V!"] --> S2
+    S2 -- Yes --> S3["3. PE Ground Continuity Test<br><i>Measure resistance between inlet ground pin and PSU chassis</i>"]
+    S3 --> S3_Check{"Resistance under 0.5 Ohm?"}
+    S3_Check -- No --> FixPE["Check PE crimps and ground bonding!"] --> S3
+    S3_Check -- Yes --> S4["4. First Power-On without drives<br><i>Flip Schurter rocker switch ON</i>"]
     S4 --> S4_LED{"Both green DC-OK LEDs lit?"}
-    S4_LED -- No --> FixAC["Check mains fuses & AC wiring!"] --> S4
-    S4_LED -- Yes --> S5["5. Voltage Calibration with DMM<br>• Measure Molex Pin 1 (+12V) vs GND<br>• Measure Molex Pin 4 (+5V) vs GND"]
-    S5 --> S6["6. Trim Potentiometers<br>• Adjust SVR1 on LRS-200-12 to 12.15V<br>• Adjust VR1 on LRS-150F-5 to 5.15V"]
-    S6 --> S7["7. Power OFF & Discharge (Wait 15s)"]
-    S7 --> S8["8. Connect Jonsbo Backplane & 8x Test Drives"]
-    S8 --> S9["9. Attach Uni-T UT210E Clamp Meter around +12V Wire"]
-    S9 --> S10["10. Live Spin-Up Test<br><i>(Power ON, observe 10.2A peak & voltage stability)</i>"]
-    S10 --> Pass(["✅ Commissioning Complete & Verified"])
+    S4_LED -- No --> FixAC["Check mains fuses and AC wiring!"] --> S4
+    S4_LED -- Yes --> S5["5. Voltage Calibration with DMM<br>Measure Molex 12V and 5V pins vs GND"]
+    S5 --> S6["6. Trim Potentiometers<br>Adjust SVR1 to 12.15V and VR1 to 5.15V"]
+    S6 --> S7["7. Power OFF and Discharge - Wait 15s"]
+    S7 --> S8["8. Connect Jonsbo Backplane and 8x Test Drives"]
+    S8 --> S9["9. Attach Uni-T UT210E Clamp Meter around 12V Wire"]
+    S9 --> S10["10. Live Spin-Up Test<br><i>Power ON, observe 10.2A peak and voltage stability</i>"]
+    S10 --> Pass(["Commissioning Complete and Verified"])
 ```
 
 1. [ ] **Visual Inspection:** Verify no stray copper strands are bridging terminals. Check that all ring terminal screws are torqued down snugly.

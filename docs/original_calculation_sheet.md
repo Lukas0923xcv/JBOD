@@ -94,13 +94,13 @@ flowchart TD
     end
 
     subgraph Molex_A1 ["Molex Header A1 Branch"]
-        F1_12["▭ Fuse 12V (7.5A / 10A)"]
-        F1_5["▭ Fuse 5V (5A)"]
-        GND1["GND Lines (Pins 2 & 3)"]
+        F1_12["Fuse 12V - 7.5A / 10A"]
+        F1_5["Fuse 5V - 5A"]
+        GND1["GND Lines - Pins 2 & 3"]
         
-        BUS_12V -->|Node ●| F1_12
-        BUS_5V -->|Node ●| F1_5
-        GND_BUS -->|Node ●| GND1
+        BUS_12V --> F1_12
+        BUS_5V --> F1_5
+        GND_BUS --> GND1
 
         F1_12 --> M1_Pin1["Pin 1: +12V"]
         F1_5 --> M1_Pin4["Pin 4: +5V"]
@@ -108,28 +108,32 @@ flowchart TD
     end
 
     subgraph Molex_A2 ["Molex Header A2 Branch"]
-        F2_12["▭ Fuse 12V (7.5A / 10A)"]
-        F2_5["▭ Fuse 5V (5A)"]
-        GND2["GND Lines (Pins 2 & 3)"]
+        F2_12["Fuse 12V - 7.5A / 10A"]
+        F2_5["Fuse 5V - 5A"]
+        GND2["GND Lines - Pins 2 & 3"]
         
-        BUS_12V -->|Node ●| F2_12
-        BUS_5V -->|Node ●| F2_5
-        GND_BUS -->|Node ●| GND2
+        BUS_12V --> F2_12
+        BUS_5V --> F2_5
+        GND_BUS --> GND2
 
         F2_12 --> M2_Pin1["Pin 1: +12V"]
         F2_5 --> M2_Pin4["Pin 4: +5V"]
         GND2 --> M2_PinGND["Pins 2 & 3: GND"]
     end
 
-    subgraph Backplane ["Jonsbo N3 Backplane (HDD 1–8)"]
-        M1_Pin1 & M1_Pin4 & M1_PinGND --> BP_A1["Molex A1 Socket"]
-        M2_Pin1 & M2_Pin4 & M2_PinGND --> BP_A2["Molex A2 Socket"]
+    subgraph Backplane ["Jonsbo N3 Backplane (HDD 1-8)"]
+        M1_Pin1 --> BP_A1["Molex A1 Socket"]
+        M1_Pin4 --> BP_A1
+        M1_PinGND --> BP_A1
+        M2_Pin1 --> BP_A2["Molex A2 Socket"]
+        M2_Pin4 --> BP_A2
+        M2_PinGND --> BP_A2
         BP_A1 & BP_A2 --> InternalPlanes["Internal Common 12V / 5V / GND Planes"]
-        InternalPlanes --> Bays["8x 3.5\" SATA Drive Bays"]
+        InternalPlanes --> Bays["8x 3.5 Inch SATA Drive Bays"]
     end
 
     subgraph Data ["Data Subsystem"]
-        Bays ===|"8x SATA Data Cables (or 2x SFF-8643 Breakouts)"| HBA["<b>HBA / Motherboard SATA Ports</b>"]
+        Bays ===|"8x SATA Data Cables"| HBA["HBA / Motherboard SATA Ports"]
     end
 ```
 
