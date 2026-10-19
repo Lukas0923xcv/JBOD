@@ -1,6 +1,6 @@
 # JBOD Power Project: Procurement & Sourcing Guide
 
-Complete Bill of Materials (BOM), verified manufacturer part numbers, Swiss/EU vendor links, pricing, and purchasing groups for the 8-HDD benchtop setup (and 40–60 drive scale-up).
+Complete Bill of Materials (BOM), verified manufacturer part numbers, Swiss/EU vendor links, pricing, and purchasing groups for the 8-HDD benchtop setup (and RSP-500-12 scale-up).
 
 ---
 
@@ -11,8 +11,9 @@ Complete Bill of Materials (BOM), verified manufacturer part numbers, Swiss/EU v
 
 | Component | Manufacturer Part Number (MPN) | Vendor / Purchase Link | Qty | Price (CHF) | Spec Notes |
 |---|---|---|---|---|---|
-| **12 V Main PSU** | `LRS-200-12` | [Mouser CH — LRS-200-12](https://www.mouser.ch/ProductDetail/MEAN-WELL/LRS-200-12) | 1 | **CHF 26.50** | 204 W, 12 V / 17 A. 1U low-profile. ⚠️ **Set red selector switch to 230 V.** |
+| **12 V Main PSU** | `RSP-200-12` | [Mouser CH — RSP-200-12](https://www.mouser.ch/ProductDetail/MEAN-WELL/RSP-200-12) | 1 | **CHF 36.66** | 200.4 W, 12 V / 16.7 A. Active PFC. Universal 88-264 VAC input. |
 | **5 V Logic PSU** | `LRS-150F-5` | [Mouser CH — LRS-150F-5](https://www.mouser.ch/ProductDetail/MEAN-WELL/LRS-150F-5) | 1 | **CHF 18.67** | 110 W, 5 V / 22 A. Full-range AC input. Output adjusts 4.5–5.5 V (set to 5.15 V). |
+| *Scale-Up 12 V PSU* | `RSP-500-12` | [Mouser CH — RSP-500-12](https://www.mouser.ch/ProductDetail/MEAN-WELL/RSP-500-12) | *Optional* | *CHF 81.84* | 500.4 W, 12 V / 41.7 A. Active PFC, remote ON/OFF, powers 30 drives. |
 
 ---
 
@@ -64,15 +65,13 @@ Complete Bill of Materials (BOM), verified manufacturer part numbers, Swiss/EU v
 
 ## 2. Order Packaging Strategy (Bern, Switzerland)
 
-To minimize shipping costs and avoid Swiss Post customs clearance admin fees, purchase across 4 clean vendor packages:
-
 * **Package 1 (Galaxus.ch / Digitec.ch):** Blue Sea 5026, Molex Y-cables, WAGO 221 nuts, blade fuses, ferrule kit, heat shrink, and Uni-T UT210E clamp meter.  
   *Subtotal: ~CHF 182.– (Free shipping, next-day Swiss Post).*
-* **Package 2 (Mouser.ch):** Mean Well LRS-200-12, Mean Well LRS-150F-5, plus spare fuses to reach CHF 50.–.  
-  *Subtotal: ~CHF 50.– (Free FedEx Express, DDP customs clearance).*
+* **Package 2 (Mouser.ch):** Mean Well RSP-200-12 (CHF 36.66) + Mean Well LRS-150F-5 (CHF 18.67).  
+  *Subtotal: ~CHF 55.33 (Free FedEx Express, DDP customs clearance).*
 * **Package 3 (Distrelec.ch):** Schurter DD11 inlet, fusedrawer 4301.1401, Swiss V-Lock cable, 5x20 mm 6.3 A fuses.  
   *Subtotal: ~CHF 33.– (Dispatched from Nänikon ZH).*
 * **Package 4 (Conrad.ch):** LAPP H07V-K wire cut to length by the meter (6 mm², 2.5 mm²), Klauke ring terminals.  
   *Subtotal: ~CHF 24.– (Domestic Swiss delivery).*
 
-**Total PoC Build Cost:** **~CHF 289.–** (or **~CHF 339.–** including the UT210E clamp meter).
+**Total PoC Build Cost:** **~CHF 295.–** (or **~CHF 345.–** including the UT210E clamp meter).
