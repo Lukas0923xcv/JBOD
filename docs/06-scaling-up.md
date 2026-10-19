@@ -26,6 +26,27 @@ The peak load with staggering is roughly `idle × (drives − group) + spin-up �
 
 ## A 24-drive build (3 backplanes)
 
+```mermaid
+flowchart LR
+    AC["Mains inlet"] --> P12["RSP-500-12"]
+    AC --> P5["LRS-150F-5"]
+    P12 -->|"+12 V · 6 mm²"| FB12["12 V fuse block<br>6 × 7.5 A"]
+    P5 -->|"+5 V · 2.5 mm²"| FB5["5 V fuse block<br>6 × 5 A"]
+    FB12 --> B1["Backplane 1<br>A1 + A2"]
+    FB12 --> B2["Backplane 2<br>A1 + A2"]
+    FB12 --> B3["Backplane 3<br>A1 + A2"]
+    FB5 --> B1
+    FB5 --> B2
+    FB5 --> B3
+    NB["Negative bus"] ---|"bond"| SRV["Server chassis"]
+    B1 & B2 & B3 -.->|"GND"| NB
+    linkStyle 2,4,5,6 stroke:#c9a000,stroke-width:3px
+    linkStyle 3,7,8,9 stroke:#d62828,stroke-width:3px
+    linkStyle 10 stroke:#2b2b2b,stroke-width:4px
+```
+
+Each arrow from a fuse block to a backplane is two fused leads, one per Molex header.
+
 | Change from the 8-drive build | Why |
 |---|---|
 | **RSP-500-12** replaces the RSP-200-12 | 30.5 A peak (73 %) |
@@ -38,6 +59,27 @@ The peak load with staggering is roughly `idle × (drives − group) + spin-up �
 ## 60 drives (two independent loops)
 
 Build two complete loops, each with **one RSP-500-12 + one LRS-150F-5** serving up to 30 drives (staggered spin-up) or 24 (all at once).
+
+```mermaid
+flowchart LR
+    AC["Mains<br>(recheck the inlet fuse)"]
+    subgraph LA ["Loop A · drives 1–30"]
+        direction TB
+        A1["RSP-500-12<br>+ LRS-150F-5"] --> A2["Fuse blocks"] --> A3["Backplanes 1–4"]
+    end
+    subgraph LB ["Loop B · drives 31–60"]
+        direction TB
+        B1["RSP-500-12<br>+ LRS-150F-5"] --> B2["Fuse blocks"] --> B3["Backplanes 5–8"]
+    end
+    AC --> A1
+    AC --> B1
+    A2 ---|"0 V"| NB["Common<br>negative bus"]
+    B2 ---|"0 V"| NB
+    NB ===|"bond"| S["Server chassis"]
+    linkStyle 6,7,8 stroke:#2b2b2b,stroke-width:3px
+```
+
+No wire ever connects Loop A's +12 V or +5 V to Loop B's. Only the 0 V side is shared.
 
 Rules:
 

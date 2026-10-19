@@ -11,3 +11,6 @@ $RECYCLE.BIN/
 
 # Temporary test logs
 *.log
+
+# Python
+__pycache__/

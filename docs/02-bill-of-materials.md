@@ -59,11 +59,12 @@ All wire is **H07V-K 2.5 mm²** (fine-stranded, rated 450/750 V), sold by the me
 | ☐ | Wire, yellow | LAPP H07V-K 2.5 mm² | 1 m | ~CHF 1.15/m | +12 V |
 | ☐ | Wire, red | LAPP `4520042` H07V-K 2.5 mm² | 1 m | ~CHF 1.15/m | +5 V |
 | ☐ | Wire, black | LAPP `4520012` H07V-K 2.5 mm² | 2 m | ~CHF 1.15/m | V− returns and the server ground bond |
-| ☐ | Ring terminals, M5, 1.5–2.5 mm² (blue) | e.g. Klauke, DIN 46237 | 10 | ~CHF 4.00 | Fuse block main stud and negative bus stud |
-| ☐ | Ring terminals, M4, 0.5–1.5 mm² (red) | e.g. Klauke, DIN 46237 | 10 | ~CHF 4.00 | 18 AWG pigtail wires to the fuse block branch screws and negative bus, and the server end of the ground bond (use a blue M4 for that one) |
+| ☐ | Ring terminals, M5, 1.5–2.5 mm² (blue) | e.g. Klauke, DIN 46237 | 10 | ~CHF 4.00 | Fuse block + stud (from the RSP-200-12) and − stud (from both supplies) |
+| ☐ | Ring terminals, M4, 0.5–1.5 mm² (red) | e.g. Klauke, DIN 46237 | 10 | ~CHF 4.00 | 18 AWG pigtail wires to the fuse block branch screws and negative bus |
+| ☐ | Ring terminals, M4, 1.5–2.5 mm² (blue) | e.g. Klauke, DIN 46237 | 4 | ~CHF 2.00 | Both ends of the server ground bond |
 | ☐ | Fork or ring terminals, 1.5–2.5 mm² (blue), sized for the PSU terminal screws | | 10 | ~CHF 4.00 | Mean Well terminal blocks use small (≈ M3.5) screws. **Check your unit** before ordering. Ferrules also work in these terminals. |
 
-**Subtotal ≈ CHF 21**
+**Subtotal ≈ CHF 23**
 
 ## Total
 
@@ -71,6 +72,6 @@ All wire is **H07V-K 2.5 mm²** (fine-stranded, rated 450/750 V), sold by the me
 |---|---|
 | Parts for the 8-drive build | **≈ CHF 250** |
 | + Uni-T UT210E clamp meter | ≈ CHF 300 |
-| + mains power meter | ≈ CHF 322 |
+| + mains power meter | ≈ CHF 324 |
 
 Next: [Electrical calculations](03-electrical-calculations.md)

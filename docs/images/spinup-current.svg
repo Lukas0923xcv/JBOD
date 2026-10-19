@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 430" width="960" height="430" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" role="img" aria-labelledby="t d">
+<title id="t">12 V current during spin-up</title>
+<desc id="d">Line chart: 12 V current jumps to about 10.2 A at power-on, holds for about 5 seconds, and settles to about 3.2 A idle by 10 seconds. The RSP-200-12 rating is 16.7 A and the 75 percent target is 12.5 A.</desc>
+<style>
+  .bg { fill: #fcfcfb; stroke: #dcdbd6; }
+  .ink { fill: #0b0b0b; } .ink2 { fill: #52514e; } .ink3 { fill: #7a7973; }
+  .grid { stroke: #e6e5e0; } .axis { stroke: #9a9993; }
+  .ref { stroke: #52514e; stroke-dasharray: 5 4; }
+  .s1 { stroke: #2a78d6; } .f1 { fill: #2a78d6; } .a1 { fill: #2a78d6; opacity: .12; }
+  .f2 { fill: #eb6834; } .conn { stroke: #9a9993; stroke-dasharray: 2 3; }
+  @media (prefers-color-scheme: dark) {
+    .bg { fill: #1a1a19; stroke: #3a3a37; }
+    .ink { fill: #f0efec; } .ink2 { fill: #c3c2b7; } .ink3 { fill: #9a998f; }
+    .grid { stroke: #2c2c2a; } .axis { stroke: #6b6a64; }
+    .ref { stroke: #c3c2b7; }
+    .s1 { stroke: #3987e5; } .f1 { fill: #3987e5; } .a1 { fill: #3987e5; opacity: .18; }
+    .f2 { fill: #d95926; } .conn { stroke: #6b6a64; }
+  }
+</style>
+<rect class="bg" x="0.5" y="0.5" width="959" height="429" rx="12"/>
+<text x="30" y="36" class="ink" font-size="18" font-weight="700" text-anchor="start" >12 V current during spin-up: 8 drives on the RSP-200-12</text>
+<text x="30" y="58" class="ink2" font-size="12.5" font-weight="400" text-anchor="start" >Illustrative shape built from the per-drive figures (1.27 A peak, 0.40 A idle). Measure your own drives with a clamp meter.</text>
+<line class="grid" x1="70" y1="370.0" x2="820" y2="370.0"/>
+<text x="60" y="374.0" class="ink2" font-size="11.5" font-weight="400" text-anchor="end" >0</text>
+<line class="grid" x1="70" y1="323.6666666666667" x2="820" y2="323.6666666666667"/>
+<text x="60" y="327.6666666666667" class="ink2" font-size="11.5" font-weight="400" text-anchor="end" >3</text>
+<line class="grid" x1="70" y1="277.3333333333333" x2="820" y2="277.3333333333333"/>
+<text x="60" y="281.3333333333333" class="ink2" font-size="11.5" font-weight="400" text-anchor="end" >6</text>
+<line class="grid" x1="70" y1="231.0" x2="820" y2="231.0"/>
+<text x="60" y="235.0" class="ink2" font-size="11.5" font-weight="400" text-anchor="end" >9</text>
+<line class="grid" x1="70" y1="184.66666666666666" x2="820" y2="184.66666666666666"/>
+<text x="60" y="188.66666666666666" class="ink2" font-size="11.5" font-weight="400" text-anchor="end" >12</text>
+<line class="grid" x1="70" y1="138.33333333333334" x2="820" y2="138.33333333333334"/>
+<text x="60" y="142.33333333333334" class="ink2" font-size="11.5" font-weight="400" text-anchor="end" >15</text>
+<line class="grid" x1="70" y1="92.0" x2="820" y2="92.0"/>
+<text x="60" y="96.0" class="ink2" font-size="11.5" font-weight="400" text-anchor="end" >18</text>
+<text x="70.0" y="390" class="ink2" font-size="11.5" font-weight="400" text-anchor="middle" >0</text>
+<text x="145.0" y="390" class="ink2" font-size="11.5" font-weight="400" text-anchor="middle" >2</text>
+<text x="220.0" y="390" class="ink2" font-size="11.5" font-weight="400" text-anchor="middle" >4</text>
+<text x="295.0" y="390" class="ink2" font-size="11.5" font-weight="400" text-anchor="middle" >6</text>
+<text x="370.0" y="390" class="ink2" font-size="11.5" font-weight="400" text-anchor="middle" >8</text>
+<text x="445.0" y="390" class="ink2" font-size="11.5" font-weight="400" text-anchor="middle" >10</text>
+<text x="520.0" y="390" class="ink2" font-size="11.5" font-weight="400" text-anchor="middle" >12</text>
+<text x="595.0" y="390" class="ink2" font-size="11.5" font-weight="400" text-anchor="middle" >14</text>
+<text x="670.0" y="390" class="ink2" font-size="11.5" font-weight="400" text-anchor="middle" >16</text>
+<text x="745.0" y="390" class="ink2" font-size="11.5" font-weight="400" text-anchor="middle" >18</text>
+<text x="820.0" y="390" class="ink2" font-size="11.5" font-weight="400" text-anchor="middle" >20</text>
+<line class="axis" x1="70" y1="370" x2="820" y2="370"/>
+<text x="445.0" y="414" class="ink2" font-size="12" font-weight="400" text-anchor="middle" >seconds after power-on</text>
+<text x="18" y="78" class="ink2" font-size="12" font-weight="400" text-anchor="start" >amps</text>
+<line class="ref" x1="70" y1="112.07777777777778" x2="820" y2="112.07777777777778" stroke-width="1.5"/>
+<text x="830" y="112.07777777777778" class="ink" font-size="12" font-weight="700" text-anchor="start" >16.7 A</text>
+<text x="830" y="127.07777777777778" class="ink2" font-size="11" font-weight="400" text-anchor="start" >RSP-200-12 rating</text>
+<line class="ref" x1="70" y1="176.94444444444446" x2="820" y2="176.94444444444446" stroke-width="1.5"/>
+<text x="830" y="176.94444444444446" class="ink" font-size="12" font-weight="700" text-anchor="start" >12.5 A</text>
+<text x="830" y="191.94444444444446" class="ink2" font-size="11" font-weight="400" text-anchor="start" >75 % target</text>
+<polygon class="a1" points="70.0,370.0 70.0,370.0 81.2,370.0 92.5,213.1 220.0,215.6 276.2,227.9 332.5,265.0 388.8,299.0 437.5,315.2 482.5,319.8 820.0,320.6 820.0,370.0"/>
+<polyline class="s1" points="70.0,370.0 81.2,370.0 92.5,213.1 220.0,215.6 276.2,227.9 332.5,265.0 388.8,299.0 437.5,315.2 482.5,319.8 820.0,320.6" fill="none" stroke-width="2.5" stroke-linejoin="round"/>
+<circle class="f1" cx="92.5" cy="213.08444444444444" r="4.5"/>
+<text x="107.5" y="191.08444444444444" class="ink" font-size="12.5" font-weight="700" text-anchor="start" >≈ 10.2 A peak</text>
+<text x="107.5" y="205.08444444444444" class="ink2" font-size="11.5" font-weight="400" text-anchor="start" >61 % of rating, 2.3 A below the 75 % target</text>
+<text x="557.5" y="308.5777777777778" class="ink" font-size="12.5" font-weight="700" text-anchor="start" >≈ 3.2 A idle (19 %)</text>
+<text x="557.5" y="342.5777777777778" class="ink2" font-size="11.5" font-weight="400" text-anchor="start" >5 V rail: steady ≈ 3.8 A throughout (17 % of the LRS-150F-5)</text>
+<text x="317.5" y="252.62222222222223" class="ink2" font-size="11.5" font-weight="400" text-anchor="start" >platters reach speed</text>
+</svg>

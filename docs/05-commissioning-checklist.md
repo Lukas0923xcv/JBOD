@@ -5,6 +5,17 @@ Print this and tick each box. **Stop at the first failure** and fix it before yo
 > [!CAUTION]
 > The cord stays **unplugged** for parts A and B. Read [SAFETY.md](../SAFETY.md) first.
 
+```mermaid
+flowchart LR
+    A["A · Visual check"] --> B["B · Resistance checks"] --> C["C · Power on,<br>no load"] --> D["D · Trim<br>voltages"] --> E["E · First spin-up"] --> F["F · Host test"] --> OK(["Done: fill in<br>the test log"])
+    classDef off fill:#eef4fb,stroke:#3f7cc0,color:#1b1b1a
+    classDef live fill:#fde2e1,stroke:#b42318,color:#1b1b1a
+    class A,B off
+    class C,D,E,F live
+```
+
+Blue steps are done with the cord unplugged. Red steps have mains connected.
+
 ## A. Visual check (unplugged)
 
 - [ ] No loose copper strands near any terminal
@@ -74,3 +85,37 @@ The meter updates only a few times per second, so it may read slightly below the
 3. [ ] All 8 drives detected, and SMART shows no new CRC errors (`smartctl -A /dev/sdX`, attribute 199)
 
 ✅ **Commissioning complete.** Fill in the [test log](test-log.md).
+
+## If something goes wrong
+
+**Unplug before you investigate.** Start from the symptom:
+
+```mermaid
+flowchart TD
+    Q{"What happened?"}
+
+    Q --> L["DC-OK LED stays off"]
+    L --> L1{"Inlet fuses OK?"}
+    L1 -- "blown" --> L2["Find the AC short first:<br>stray strand, wrong terminal,<br>L touching PE. Then replace."]
+    L1 -- "OK" --> L3["Switch on? WAGO levers closed?<br>L and N reach that supply?"]
+
+    Q --> V["Voltage won't trim"]
+    V --> V1["Right trimmer? Measuring the right pins?<br>12 V: pins 1–2 · 5 V: pins 4–3"]
+
+    Q --> F["Branch fuse blows"]
+    F --> F1{"When?"}
+    F1 -- "power-on, no drives" --> F2["Short in that pigtail:<br>check pin-out and crimps"]
+    F1 -- "at spin-up" --> F3["Measure current per header.<br>Over ~6 A? Drives draw more than assumed:<br>rerun tools/jbod_power.py"]
+
+    Q --> S["12 V sags below 11.9 V"]
+    S --> S1["Feel for warm crimps or fuses and re-crimp.<br>Total current near 16.7 A? Too many drives."]
+
+    Q --> H["Supply clicks on and off"]
+    H --> H1["Overload or short protection.<br>Disconnect the backplane and retest unloaded."]
+
+    Q --> D["Drive missing or CRC errors"]
+    D --> D1["Ground bond connected? Drive spun up?<br>Reseat or swap the SATA cable."]
+
+    classDef sym fill:#fff4d6,stroke:#b07d00,color:#1b1b1a
+    class L,V,F,S,H,D sym
+```

@@ -18,40 +18,9 @@ Both supplies have a voltage-adjust trimmer (marked **V.ADJ**). It is used to se
 
 ## System diagram
 
-```mermaid
-flowchart TD
-    subgraph AC ["Mains side · 230 VAC"]
-        Wall["Wall outlet<br>(Swiss Typ 13)"] --> Cord["Typ 12 → C13 cord"]
-        Cord --> Inlet["Schurter DD11 inlet<br>2-pole switch + 2× 6.3 A T fuses"]
-        Inlet --> WL["WAGO: L"]
-        Inlet --> WN["WAGO: N"]
-        Inlet --> WPE["WAGO: PE"]
-    end
+Every wire, in the colour you'll actually use:
 
-    WL & WN & WPE --> PSU12["RSP-200-12<br>set to 12.15 V"]
-    WL & WN & WPE --> PSU5["LRS-150F-5<br>set to 5.15 V"]
-
-    subgraph DC ["DC distribution"]
-        PSU12 -->|"+12 V · 2.5 mm²"| FB["Blue Sea 5026<br>fuse block (+ bus)"]
-        PSU12 -->|"V− · 2.5 mm²"| NB["Blue Sea 5026<br>negative bus"]
-        PSU5 -->|"V− · 2.5 mm²"| NB
-        PSU5 -->|"+5 V · 2.5 mm²"| W5["WAGO: +5 V split"]
-
-        FB -->|"7.5 A blade fuse"| A1_12["Molex A1 · +12 V"]
-        FB -->|"7.5 A blade fuse"| A2_12["Molex A2 · +12 V"]
-        W5 -->|"5 A inline fuse"| A1_5["Molex A1 · +5 V"]
-        W5 -->|"5 A inline fuse"| A2_5["Molex A2 · +5 V"]
-        NB --> A1_G["Molex A1 · 2× GND"]
-        NB --> A2_G["Molex A2 · 2× GND"]
-    end
-
-    NB ===|"2.5 mm² ground bond"| Server["Host server chassis"]
-
-    A1_12 & A1_5 & A1_G --> BP["Jonsbo N3 backplane<br>8 bays"]
-    A2_12 & A2_5 & A2_G --> BP
-    BP --> HDD["8× 3.5″ SATA drives"]
-    BP -. "SATA data" .-> Server
-```
+![Wiring diagram: 8-drive build](images/wiring-diagram.svg)
 
 ### Why each part is there
 
@@ -60,6 +29,24 @@ flowchart TD
 - **5 V fused separately.** The fuse block has a single positive bus, so it can carry only one voltage. The 5 V leads use two inline blade-fuse holders off a lever-nut split instead.
 - **Both Molex headers on one backplane come from the same pair of supplies.** On the Jonsbo N3 both headers feed the same internal 12 V and 5 V copper planes, so the current splits roughly evenly between them. **Never** feed the two headers of one backplane from two different supplies: their outputs would be tied together and would fight each other.
 - **Ground bond to the server.** Mean Well supplies have isolated outputs, which means their V− terminal is not connected to earth, so the JBOD's 0 V would otherwise float relative to the server. The bond wire gives the drives and the SATA controller the same 0 V reference. Then the SATA cable ground wires never have to carry an offset current, and a static or fault charge has a proper path.
+
+### What protects what
+
+Each protective device covers the part of the circuit downstream of it. If something fails, look at the first device upstream of the fault:
+
+```mermaid
+flowchart LR
+    M["Mains"] --> IF["<b>Inlet fuses</b><br>2 × 6.3 A T<br><i>AC wiring, a failed supply</i>"]
+    IF --> OL["<b>PSU overload shutdown</b><br>built into each supply<br><i>too many drives, main feed short</i>"]
+    OL --> BF["<b>Branch fuses</b><br>7.5 A (12 V) · 5 A (5 V)<br><i>a short in one pigtail or header</i>"]
+    BF --> BP["Backplane<br>and drives"]
+    classDef prot fill:#fff4d6,stroke:#b07d00,color:#1b1b1a
+    class IF,OL,BF prot
+```
+
+Each yellow box lists what it protects against, in italics.
+
+A short on the backplane itself sits behind **both** branch fuses of that rail, because the two headers share one copper plane. Either fuse, or both, may blow.
 
 ## Why not an ATX power supply?
 

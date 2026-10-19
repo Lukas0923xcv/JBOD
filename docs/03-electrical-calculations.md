@@ -23,6 +23,8 @@ Load, fuse and wire sizing for the 8-drive build. To redo any of this for a diff
 | +5 V | 8 × 0.47 A = **3.76 A** (19 W) | LRS-150F-5 | 22 A | **17.1 %** | ✅ |
 | **Total peak** | **141 W** | | | | |
 
+![12 V current during spin-up](images/spinup-current.svg)
+
 Within the 75 % target, the RSP-200-12 handles at most **9 drives** spinning up together (10 drives is 76 %). The LRS-150F-5 handles **35 drives**.
 
 ## Branch fuses
@@ -57,7 +59,9 @@ $$\Delta V = I \cdot \frac{\rho \cdot L}{A}, \qquad \rho_{\text{Cu}} = 0.0175\ \
 | Negative bus → LRS-150F-5 V− | 2.5 mm² | 0.5 m | 3.76 A | 0.013 V |
 | **5 V round trip, wire only** | | | | **≈ 0.05 V** |
 
-Add roughly **0.05 V per fuse** and a little for each crimp and the Molex contacts.
+Add roughly **0.05 V per fuse** and a little for each crimp and the Molex contacts. Put together:
+
+![Voltage budget from trimmer to drive](images/voltage-budget.svg)
 
 2.5 mm² wire is rated about 24 A, so every 2.5 mm² run here has at least 2× headroom. Earlier versions of this design used 6 mm² for the returns. That isn't needed at these currents, and it would not fit the PSU terminal blocks well.
 
@@ -72,11 +76,18 @@ Set the outputs with **no drives connected**, measuring at the Molex pigtail:
 
 ## Ground bond to the server
 
+```mermaid
+flowchart LR
+    R["RSP-200-12 V−"] --> NB["Blue Sea<br>negative bus"]
+    L["LRS-150F-5 V−"] --> NB
+    NB -->|"2.5 mm² black"| S["Server chassis<br>(bare-metal screw)"]
+    S --- E["Mains earth<br>(via the server's PSU)"]
+    NB -. "SATA cable ground wires" .- S
+    linkStyle 0,1,2 stroke:#2b2b2b,stroke-width:4px
+    linkStyle 3 stroke:#2e9e3e,stroke-width:3px
 ```
- RSP-200-12 V− ──┐
-                 ├──► Blue Sea negative bus ───── 2.5 mm² black ─────► Server chassis
- LRS-150F-5 V− ──┘                                                   (bare-metal screw)
-```
+
+Without the bond wire, the dotted path (the thin ground wires inside the SATA cables) would be the only connection between the two 0 V references.
 
 Mean Well outputs are isolated, so V− has no connection to earth. Without the bond, the JBOD's 0 V floats relative to the server's 0 V, which is tied to chassis and earth. The only link between them would then be the thin ground wires inside the SATA cables. The bond wire:
 
