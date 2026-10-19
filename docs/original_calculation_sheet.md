@@ -1,6 +1,6 @@
 # Original Power Calculations & Schematic (Digitized from Worksheet)
 
-This document is the digitized, clean markdown version of the original design sheet (`power_calculation_sheet.pdf`), containing the raw drive power metrics, power supply sizing tables, and the original busbar wiring schematics.
+This document is the digitized, clean markdown version of the original design worksheet, containing the raw drive power metrics, power supply sizing tables, and the original busbar wiring schematics.
 
 ---
 
@@ -27,7 +27,6 @@ To prevent premature aging and ensure cool, reliable operation, the target desig
 |---|---|---|---|---|---|---|---|---|
 | **Mean Well RSP-200-12** | 12 V | 16.7 A | 200.4 W | ~CHF 46.95 | **150.3 W** | **10 HDDs** | 3 | 5 HDDs |
 | **Mean Well RSP-500-12** | 12 V | 41.7 A | 500.4 W | ~CHF 81.84 | **375.3 W** | **30 HDDs** | 3 | 15 HDDs |
-| **Mean Well LRS-200-12 (PoC)** | 12 V | 17.0 A | 204.0 W | ~CHF 26.50 | **153.0 W** | **10 HDDs** | 3 | 5 HDDs |
 | **Mean Well LRS-150F-5** | 5 V | 22.0 A | 110.0 W | ~CHF 27.90 | **82.5 W** | **36 HDDs** | 2 | 18 HDDs |
 
 ---
@@ -46,7 +45,7 @@ This diagram visualizes how the dual industrial power supplies interface with th
 
 ```mermaid
 flowchart TD
-    subgraph PSU_12V ["Mean Well 12V PSU (e.g. LRS-200-12 / RSP-200-12)"]
+    subgraph PSU_12V ["Mean Well 12V PSU (RSP-200-12 / RSP-500-12)"]
         PSU12_Vpos["V+ (+12V)"]
         PSU12_Vneg["V- (GND)"]
     end

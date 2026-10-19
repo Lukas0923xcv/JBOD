@@ -8,7 +8,7 @@
 
 ## 1. Verified Electrical & Power Calculations (from Your Spec Sheet)
 
-Based on your calculation sheet (`Unbenannte Tabelle - Tabellenblatt1.pdf` / `docs/original_calculation_sheet.md`), here are the exact metrics for the **8-HDD PoC setup**:
+Based on the calculations in [`docs/original_calculation_sheet.md`](docs/original_calculation_sheet.md), here are the exact metrics for the **8-HDD PoC setup**:
 
 | Rail | Per-HDD Spin-up | 8 HDDs Spin-up Load | PSU Model | PSU Rated Output | Peak Load % | Margin |
 |---|---|---|---|---|---|---|

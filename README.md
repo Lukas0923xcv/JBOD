@@ -30,7 +30,6 @@ Designed for high reliability, clean voltage regulation, individual branch fuse 
 * **[Electrical Calculations & Fusing](docs/electrical_calculations.md)**: Spin-up load calculations, continuous ampacity, fuse sizing (ATO/ATC blade fuses), wire cross-sections, and ground-loop prevention.
 * **[Wiring & Assembly Guide](docs/wiring_and_assembly.md)**: Step-by-step bench assembly instructions, WAGO 221 AC mains split, voltage trimming (12.15 V / 5.15 V), and pre-flight commissioning checklist.
 * **[Original Calculation Sheet (Digitized Markdown)](docs/original_calculation_sheet.md)**: Clean markdown conversion of the original worksheet, formulas, and busbar schematics.
-* **[Original Calculation Sheet & Schematic (PDF)](docs/power_calculation_sheet.pdf)**: The original source engineering spreadsheet and wiring layout used for sizing.
 * **[License & Legal Disclaimer](LICENSE)**: MIT License with strict limitation of liability and hardware safety terms.
 
 ---
