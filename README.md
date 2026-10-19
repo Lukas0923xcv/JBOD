@@ -1,5 +1,23 @@
 # DIY High-Density JBOD Power System
 
+> [!CAUTION]
+> ## ⚠️ UNTESTED EXPERIMENTAL DESIGN & STRICT LIMITATION OF LIABILITY
+>
+> **1. STATUS: THEORETICAL / UNTESTED PROOF OF CONCEPT (POC)**  
+> The schematics, wiring instructions, Bill of Materials, calculations, and architectural designs in this repository represent a **theoretical and currently UNTESTED proof of concept**. The author has **NOT yet built, powered on, physically stress-tested, or lab-verified this build**. Sizing is derived strictly from calculations and manufacturer datasheets that may contain omissions or unmodeled real-world failure dynamics.
+>
+> **2. LETHAL MAINS VOLTAGE (230 VAC) & FIRE HAZARDS**  
+> This project involves working directly with **mains electricity (100–240 VAC / 230 VAC)** and high-current direct-current (DC) power supplies. Mains voltage is **LETHAL** and presents severe risks of **fatal electrocution, arc flash, explosive component failure, and property-destroying fires**.
+>
+> **3. NO WARRANTY & ABSOLUTE LIMITATION OF LIABILITY ("AS IS")**  
+> THIS REPOSITORY AND ALL ASSOCIATED DOCUMENTATION ARE PROVIDED **"AS IS", WITHOUT WARRANTY OF ANY KIND**, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OPERATIONAL SAFETY, OR NON-INFRINGEMENT.  
+> **IN NO EVENT SHALL THE AUTHORS, MAINTAINERS, OR CONTRIBUTORS BE LIABLE FOR ANY CLAIM, DAMAGES, LOSS OF DATA, DESTRUCTION OF HARDWARE, PROPERTY DAMAGE, FIRE DAMAGE, PERSONAL INJURY, ELECTROCUTION, OR DEATH**, WHETHER IN AN ACTION OF CONTRACT, TORT (INCLUDING NEGLIGENCE), STRICT LIABILITY, OR OTHERWISE, ARISING OUT OF OR IN CONNECTION WITH THE ACCESS, USE, REPLICATION, MODIFICATION, OR IMPLEMENTATION OF THIS MATERIAL.
+>
+> **4. USER ASSUMES 100% OF ALL RISKS**  
+> If you choose to replicate, adapt, construct, or energize any circuit described herein, **YOU DO SO AT YOUR OWN RISK**. You are solely responsible for compliance with all applicable local, regional, and national electrical codes and standards (e.g., SEV / NIN, VDE, NEC, CE, UL). Never work on energized circuits, and always have mains-voltage installations inspected by a licensed, certified electrician before applying power.
+
+---
+
 A well-documented, reproducible hardware guide for powering large arrays of 3.5" SATA hard drives (JBOD) using industrial **Mean Well switch-mode power supplies** instead of consumer ATX power supplies.
 
 Designed for high reliability, clean voltage regulation, individual branch fuse protection, and common-ground reference with host servers.
@@ -18,12 +36,14 @@ This repository is organized into self-contained, human-readable modules:
   Step-by-step bench assembly instructions, WAGO 221 AC mains split, voltage trimming (12.15 V / 5.15 V), and pre-flight commissioning checklist.
 * 📊 **[Original Calculation Sheet & Schematic (PDF)](docs/power_calculation_sheet.pdf)**  
   The source engineering spreadsheet and wiring layout used for sizing.
+* ⚖️ **[License & Legal Disclaimer](LICENSE)**  
+  MIT License with strict limitation of liability and hardware safety terms.
 
 ---
 
 ## 🎯 Project Overview & Scope
 
-### 1. Proof of Concept (Current Build)
+### 1. Proof of Concept (Current Target)
 * **Drive Count:** 8x 3.5" SATA HDDs (using sacrificial 80–500 GB test drives).
 * **Backplane:** 1x Jonsbo N3 8-bay backplane (dual 4-pin Molex power inputs, 8x SATA data).
 * **12 V Spindle Power:** **Mean Well LRS-200-12** (12 V / 17 A, 204 W).
@@ -106,14 +126,3 @@ flowchart TD
    SATA data links are single-ended signals referenced to ground. If the JBOD DC negative and host server ground differ in potential, data corruption or blown PHY chips will occur. The dedicated $6.0\text{ mm}^2$ bonding wire ties both grounds together securely.
 4. **Trimming for IR Drop:**  
    Tuning the 5 V rail to **5.15 V** and the 12 V rail to **12.15 V** at the power supply terminals guarantees that hard drives receive exactly 5.00 V and 12.00 V under full load at the end of the wire harness.
-
----
-
-## ⚠️ Safety Disclaimer
-
-> [!CAUTION]
-> This project involves **230 VAC mains wiring**. Mains electricity can cause fatal electric shocks and fires.
-> * Always disconnect the mains plug before working on the power supply terminals.
-> * Ensure Protective Earth (PE) is securely bonded to all metal enclosures and supply casings.
-> * Verify all crimps, insulation sleeves, and fuses before initial power-on.
-> * If you are not qualified to perform mains-voltage electrical work, have a certified professional inspect your assembly.

@@ -1,5 +1,9 @@
 # JBOD Power: Wiring, Assembly & Commissioning Guide
 
+> [!CAUTION]
+> ### ⚠️ EXPERIMENTAL & UNTESTED DESIGN — PROCEED AT YOUR OWN RISK
+> This guide outlines a **theoretical, currently UNTESTED proof-of-concept setup**. The author has **not yet physically assembled or tested this circuit**. Mains electricity (230 VAC) is lethal. The author and contributors accept **no liability or responsibility** for any equipment damage, data loss, fire, personal injury, or death resulting from the use or misuse of this information. Proceed strictly at your own risk.
+
 Step-by-step assembly, wiring diagrams, and pre-flight commissioning checklist for the 8-HDD benchtop JBOD power system.
 
 ---

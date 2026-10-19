@@ -1,0 +1,37 @@
+MIT License
+
+Copyright (c) 2026 Lukas
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software, hardware designs, schematics, and associated documentation files
+(the "Software / Hardware Designs"), to deal in the Software / Hardware Designs
+without restriction, including without limitation the rights to use, copy, modify,
+merge, publish, distribute, sublicense, and/or sell copies of the Software / Hardware
+Designs, and to permit persons to whom the Software / Hardware Designs are furnished
+to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software / Hardware Designs.
+
+THE SOFTWARE AND HARDWARE DESIGNS ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE / HARDWARE DESIGNS OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE / HARDWARE DESIGNS.
+
+===============================================================================
+ADDITIONAL HARDWARE & ELECTRICAL SAFETY DISCLAIMER:
+===============================================================================
+1. UNTESTED DESIGN: The contents of this repository represent an experimental,
+untested proof-of-concept design. No physical testing, thermal validation, or
+safety certification has been completed.
+
+2. HIGH VOLTAGE / LETHAL HAZARD: This design involves 230 VAC mains wiring.
+Mains voltage can kill. High-current DC distribution can cause thermal runaway,
+arcing, and fire.
+
+3. TOTAL ASSUMPTION OF RISK: The user assumes all responsibility and risk for
+the use of these designs. The authors disclaim any and all liability for personal
+injury, death, equipment loss, data corruption, or property damage.
