@@ -43,7 +43,7 @@ The Jonsbo N3 has two Molex headers, **A1** and **A2**, which feed the same inte
 | +5 V (red) | 3.76 A ÷ 2 = **1.88 A** | **5 A** ATO/ATC | 3 A would be the minimum. 5 A leaves room for the capacitor inrush when a drive is hot-inserted and is still well within the wire's limit. |
 | Fans (yellow 0.75 mm²) | 2 × 0.3 A = **0.6 A** | **1 A** ATO/ATC, position 3 | 1.25 × 0.6 = 0.75 A, so 1 A. Also protects the fans' own thin (≈ 24 AWG) leads. |
 
-The 18 AWG pigtails should never get a fuse above **10 A**. If your drives need more than that per header (above about 1.6 A spin-up per drive with 8 drives), the calculator says so: use fewer drives per backplane, staggered spin-up or thicker wire.
+The 18 AWG pigtails should never get a fuse above **10 A**. If your drives need more than that per header (above 2.0 A spin-up per drive with 8 drives: 4 × 2.0 A × 1.25 = 10 A), the calculator says so: use fewer drives per backplane, staggered spin-up or thicker wire.
 
 Blade fuses carry their rated current indefinitely and take seconds to minutes to blow at 135–200 % of rating, and about 0.15–5 s at 200 %. A 5.08 A spin-up surge on a 7.5 A fuse (68 %) is therefore no problem.
 

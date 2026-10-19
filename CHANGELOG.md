@@ -1,5 +1,20 @@
 # Changelog
 
+## 2026-10-19: Second consistency pass
+
+| Was | Now | Why |
+|---|---|---|
+| 18 AWG fuse limit reached "above about 1.6 A spin-up per drive" | Above **2.0 A** | 4 drives per header × 2.0 A × 1.25 = 10 A, the largest fuse 18 AWG allows |
+| "Wait 10 s before switching on again" | Wait about a minute | The inrush thermistor needs time to cool; 10 s doesn't help |
+| Spin-up stop limit 12.5 A on the clamp | 11.9 A | The clamp on the pigtails doesn't see the 0.6 A of fans: 12.525 − 0.6 = 11.9 A |
+| RSP-500-12 short current "6–7 ×" a 7.5 A fuse | 5.9–7.5 ×, marked as assumed | 44 / 7.5 = 5.9, 56 / 7.5 = 7.5; the 105–135 % limit is not verified for the RSP-500 |
+| 60-drive real load "≈ 3 A at 230 V" | ≈ 4 A | The LRS supplies' power factor (≈ 0.5) adds about 1.5 A |
+| Original worksheet warning didn't cover its ground bond | Notes the 6 mm² bond, the "prevents ground loops" claim and the missing mains design | |
+| Fuse block torques stated as fact | Attributed to Blue Sea (studs) and a retailer (branch screws) | |
+| Unverified facts spread over several documents | One "Still to verify" list in the README | |
+
+- **New:** `tools/check_repo.py` checks every relative link and anchor, recomputes the key figures and confirms the docs quote them, and fails if a diagram is out of date. A GitHub Actions workflow runs it on every push.
+
 ## 2026-10-19: Independent review fixes
 
 An independent review found safety gaps on the mains side and several wrong or unverified claims. All are fixed here.

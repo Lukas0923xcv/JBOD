@@ -128,8 +128,8 @@ Brown = L, blue = N, green-yellow (dashed) = PE.
 
 ## Step 4: +12 V distribution
 
-1. Run a **yellow 2.5 mm²** wire from **RSP-200-12 V+** (fork or ring terminal) to the **positive main stud** of the Blue Sea 5026 (M5 ring terminal). Torque the stud nut to the value printed on the block (24 in-lb, 2.7 N·m).
-2. Crimp an **M4 red ring terminal** on the yellow wire of pigtail A1 and connect it to **branch 1**. Do the same with A2 on **branch 2**. Branch screws: about 2 N·m.
+1. Run a **yellow 2.5 mm²** wire from **RSP-200-12 V+** (fork or ring terminal) to the **positive main stud** of the Blue Sea 5026 (M5 ring terminal). Torque the stud nut to the value printed on the block (Blue Sea lists 24 in-lb, 2.7 N·m).
+2. Crimp an **M4 red ring terminal** on the yellow wire of pigtail A1 and connect it to **branch 1**. Do the same with A2 on **branch 2**. Branch screws: about 2 N·m (one retailer lists 18 in-lb; check the label on the block).
 3. Insert a **7.5 A** blade fuse in positions 1 and 2. Position 3 is for the fans (step 7). Leave all other positions empty.
 
 ## Step 5: +5 V distribution
@@ -163,9 +163,10 @@ Skip this step if the backplane sits in a case with its own fans that you wire t
 
 1. Crimp a red M4 ring onto a **yellow 0.75 mm²** wire and connect it to **branch 3** of the fuse block. Crimp another onto a **black 0.75 mm²** wire and connect it to a free negative bus branch screw. Lead both out through a grommet to the fans.
 2. Join the yellow wire to both fans' **red** (+12 V) wires with a WAGO 221-413, and the black wire to both fans' **black** wires with another. Use 0.25–0.5 mm² ferrules on the thin fan wires.
-3. On most 3-pin fans the **yellow fan wire is the speed signal**, not +12 V. Don't connect it: insulate its end with heat shrink and tie it back.
-4. Insert a **1 A** blade fuse in position 3.
-5. Mount the fans so they blow across the drives (front to back through the cage).
+3. Tie the two lever nuts to the fan frame or the cage so they can't dangle or touch anything.
+4. On most 3-pin fans the **yellow fan wire is the speed signal**, not +12 V. Don't connect it: insulate its end with heat shrink and tie it back.
+5. Insert a **1 A** blade fuse in position 3.
+6. Mount the fans so they blow across the drives (front to back through the cage).
 
 ## Step 8: Finish
 

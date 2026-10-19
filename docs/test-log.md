@@ -32,7 +32,7 @@ This design has **not been verified yet**. These measurements are what will veri
 
 | Measurement | Expected | Measured |
 |---|---|---|
-| 12 V peak current at spin-up (both yellow pigtail wires) | drives × spin-up current (8 HC530s: ≈ 10.2 A), ≤ 12.5 A | |
+| 12 V peak current at spin-up (both yellow pigtail wires) | drives × spin-up current (8 HC530s: ≈ 10.2 A), ≤ 11.9 A | |
 | 12 V peak current, A1 / A2 separately | each < 7.5 A | |
 | 12 V MIN at spin-up | ≥ 11.90 V | |
 | 5 V MIN | ≥ 5.00 V | |

@@ -72,7 +72,7 @@ A multimeter can't tell a good earth from a marginal one, and it can't test insu
   - If not: switch off, unplug, and check the inlet fuses and the AC wiring
 - [ ] No smell, no noise other than a faint whine, nothing gets warm
 
-After switching off, **wait at least 10 s before switching on again**. Switching back on while the supplies are still warm lets a bigger inrush current through, which can blow the inlet fuses.
+After switching off, **wait about a minute before switching on again**. The supplies limit their switch-on (inrush) current with a thermistor that only works when it is cold, so switching off and on in quick succession lets a much bigger inrush through, which can blow the inlet fuses.
 
 ## D. Trim the voltages (no load)
 
@@ -124,11 +124,11 @@ Some backplanes make their own 3.3 V. On an enterprise drive with Power Disable 
 3. [ ] Put the enclosure lid on.
 4. [ ] Set the clamp meter to **DC A, 20 A range** and **zero it** (press ZERO with the jaws closed and away from wires). Clamp it around **both yellow pigtail wires together**, outside the enclosure. Together they carry the whole drive load on 12 V (the fans have their own fuse).
 5. [ ] Back-probe pigtail A1 pins 1 (+) and 2 (−) with the multimeter, and set it to **MIN/MAX**
-6. [ ] Plug in and switch on, then watch. Repeat the spin-up with the multimeter on pins 4 (+) and 3 (−) for the 5 V reading. Switch off and wait 10 s between runs.
+6. [ ] Plug in and switch on, then watch. Repeat the spin-up with the multimeter on pins 4 (+) and 3 (−) for the 5 V reading. Switch off and wait about a minute between runs.
 
 | ✓ | Check | Expect | Reading |
 |---|---|---|---|
-| ☐ | 12 V current during spin-up (highest reading) | ≈ your expected peak. **Stop if above 12.5 A** (75 % of 16.7 A) | |
+| ☐ | 12 V current during spin-up (highest reading) | ≈ your expected peak. **Stop if above 11.9 A** (75 % of 16.7 A = 12.5 A, minus 0.6 A for the fans, which this clamp position doesn't see) | |
 | ☐ | 12 V current in one yellow wire only (clamp A1, then A2) | ≈ half of the total if the planes are shared. **Must stay below 7.5 A** | |
 | ☐ | 12 V MIN during spin-up | ≥ 11.90 V | |
 | ☐ | 5 V MIN | ≥ 5.00 V | |
@@ -164,7 +164,7 @@ flowchart TD
     L1 -- "OK" --> L3["Switch on? WAGO levers closed?<br>L and N reach that supply?"]
 
     Q --> I["Inlet fuse blows at switch-on,<br>no short found"]
-    I --> I1["Inrush: both supplies charge at once.<br>Wait ≥ 10 s between off and on.<br>Happens every time? Recheck the AC wiring."]
+    I --> I1["Inrush: both supplies charge at once.<br>Wait about a minute between off and on.<br>Happens every time? Recheck the AC wiring."]
 
     Q --> R["RCD trips"]
     R --> R1["Insulation fault from L or N to PE.<br>Don't reset and retry: have it tested (B2)."]
