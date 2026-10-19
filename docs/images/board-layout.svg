@@ -6,7 +6,7 @@
 <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#5f5f5a"/></marker>
 <marker id="dim" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1b1b1a"/></marker>
 </defs><text x="30" y="36" font-size="20" font-weight="700" fill="#1b1b1a" text-anchor="start" >Board layout (top view, to scale)</text>
-<text x="30" y="58" font-size="12.5" font-weight="400" fill="#5c5c58" text-anchor="start" >Suggested placement on a 420 × 300 mm insulating board. Footprints are approximate: check your parts before drilling.</text>
+<text x="30" y="58" font-size="12.5" font-weight="400" fill="#5c5c58" text-anchor="start" >Suggested placement on a 420 × 300 mm insulating board, mounted inside the earthed enclosure. Footprints are approximate: check your parts before drilling.</text>
 <text x="30" y="76" font-size="12.5" font-weight="400" fill="#5c5c58" text-anchor="start" >Keep ≥ 20 mm around each supply for airflow (dashed outline). Terminal strips face the DC side to keep runs short.</text>
 <rect x="70.0" y="110.0" width="840.0" height="600.0" rx="8" fill="#e9dcc3" stroke="#9b8660" stroke-width="2" />
 <rect x="170.0" y="120.0" width="510.0" height="310.0" rx="10" fill="none" stroke="#3f7cc0" stroke-width="1.5" stroke-dasharray="6 5"/>
@@ -26,7 +26,7 @@
 <text x="780.0" y="324.0" font-size="11.5" font-weight="400" fill="#5c5c58" text-anchor="middle" >≈ 100 × 150 mm</text>
 <rect x="90.0" y="190.0" width="80.0" height="120.0" rx="5" fill="#d9d9d3" stroke="#5f5f5a" stroke-width="1.5" />
 <text x="130.0" y="246.0" font-size="14" font-weight="700" fill="#1b1b1a" text-anchor="middle" >Inlet</text>
-<text x="130.0" y="264.0" font-size="11.5" font-weight="400" fill="#5c5c58" text-anchor="middle" >on bracket</text>
+<text x="130.0" y="264.0" font-size="11.5" font-weight="400" fill="#5c5c58" text-anchor="middle" >in wall</text>
 <rect x="106.0" y="360.0" width="48.0" height="20.0" rx="3" fill="#f6a623" stroke="#9a6206" stroke-width="1.5" />
 <rect x="106.0" y="392.0" width="48.0" height="20.0" rx="3" fill="#f6a623" stroke="#9a6206" stroke-width="1.5" />
 <rect x="106.0" y="424.0" width="48.0" height="20.0" rx="3" fill="#f6a623" stroke="#9a6206" stroke-width="1.5" />
@@ -37,7 +37,7 @@
 <text x="730.0" y="640.0" font-size="11" font-weight="600" fill="#5c5c58" text-anchor="middle" >+5 V split and inline fuses</text>
 <path d="M910.0,310.0 l40,0" stroke="#5f5f5a" stroke-width="3" marker-end="url(#arr)"/>
 <text x="956.0" y="302.0" font-size="11.5" font-weight="600" fill="#1b1b1a" text-anchor="start" >pigtails A1, A2</text>
-<text x="956.0" y="318.0" font-size="11.5" font-weight="400" fill="#5c5c58" text-anchor="start" >to backplane</text>
+<text x="956.0" y="318.0" font-size="11.5" font-weight="400" fill="#5c5c58" text-anchor="start" >through a grommet</text>
 <path d="M910.0,410.0 l40,0" stroke="#5f5f5a" stroke-width="3" marker-end="url(#arr)"/>
 <text x="956.0" y="414.0" font-size="11.5" font-weight="600" fill="#1b1b1a" text-anchor="start" >ground bond to server</text>
 <path d="M30.0,250.0 l38,0" stroke="#3c3c3a" stroke-width="7" stroke-linecap="round"/>

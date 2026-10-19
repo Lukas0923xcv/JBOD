@@ -1,5 +1,46 @@
 # Changelog
 
+## 2026-10-19: Independent review fixes
+
+An independent review found safety gaps on the mains side and several wrong or unverified claims. All are fixed here.
+
+### Safety
+
+| Was | Now | Why |
+|---|---|---|
+| Open board, no enclosure; inlet on "a small upright bracket" | Whole build in a closed, earthed metal enclosure (e.g. 19″ 2U case), inlet in its rear wall, grommets for the DC leads | The inlet tabs, AC lever nuts and PSU terminals carried touchable 230 VAC |
+| 6.3 mm push-on receptacles for the inlet, on 2.5 mm² wire | **Fully insulated 4.8 mm** receptacles on 1.5 mm² leads | The Schurter DD11.0121.1111 has 4.8 × 0.8 mm tabs (Schurter datasheet). A 6.3 mm receptacle sits loose on them |
+| Trim with "a small flat screwdriver" next to uncovered AC terminals | Insulated trimming tool, AC terminals covered (cover or polycarbonate sheet), one hand | The V.ADJ trimmers sit on the same terminal strip as L and N |
+| Earth check "< 0.5 Ω" at the inlet pins with a hobby multimeter; no insulation test | ≤ 0.3 Ω at the plug pins through the cord, probes zeroed; L↔N checks; **electrician's safety test** (SNR 462638 / EN 50678) before the first plug-in; first power-on from a 30 mA RCD socket | A multimeter can't prove PE or insulation |
+| JBOD 0 V earthed only through the server bond | Negative bus also bonded to PE inside the JBOD (green-yellow 2.5 mm², PE lever nut now a 5-way WAGO 221-415); "server bond before data cables, off last" | With the bond off, a 12 V fault to the server chassis would return through the SATA data cable grounds |
+| No drive cooling | Two 12 V fans on fuse block position 3 (1 A), drive temperature checks (SMART 194 ≤ 45 °C) | Eight 7200 rpm drives overheat without airflow |
+| "A DC short can deliver far more than 100 A", "a hard short (hundreds of amps) clears in milliseconds" | The RSP-200-12 limits a short to about 17.5–22.5 A and hiccups (105–135 %), often before the 7.5 A fuse blows; the LRS-150F-5 gives 24–31 A, which blows the 5 A fuse | Switch-mode supplies limit their current; the troubleshooting chart now says a 12 V short shows up as clicking |
+
+### Calculations and claims
+
+| Was | Now | Why |
+|---|---|---|
+| "Both headers feed the same copper planes" stated as fact | Marked unverified; commissioning measures A1 ↔ A2 | Not checked on the real backplane |
+| Blown-fuse behaviour not covered | With shared planes, one blown 12 V fuse goes unnoticed, and at the next spin-up the other carries 10.16 A = 135 % of 7.5 A. Check both fuses, or use LED-indicator fuses | |
+| "PWDIS is not an issue" | Holds only if the backplane makes no 3.3 V; new commissioning step D2 measures it | Not verified on the Jonsbo N3 |
+| Drives see "about 12.05 V and 5.10 V" (overview) vs 11.95–12.05 / 5.05–5.10 V (calculations) | ≈ 12.0 V and 5.05 V at the spin-up peak everywhere | 12.15 − 0.159 = 11.99 V; 5.15 − 0.103 = 5.05 V |
+| Commissioning expected ≈ 10 A / ≈ 3.2 A with old test drives | Expected = drives × that drive's datasheet figure, hard stop at 12.5 A, < 7.5 A per header | The HC530 figures don't apply to test drives |
+| One multimeter for 12 V and 5 V minimums at once | MIN/MAX mode, one spin-up per rail | A multimeter without MIN/MAX misses the dip |
+| 60 drives "over 1 kW at peak (≈ 5 A)" | ≈ 7 A at the supplies' full rating, ≈ 3 A at the real 60-drive load | The old figure mixed the two |
+| "Follow NIN / SEV" | NIV/NIN cover building wiring; a self-built device is a product (NEV); plus the safety test | |
+| "Cut just behind each of the two female connectors" | Cut at the male end; check the insulation says 18AWG | The old wording left no wire on the pigtails |
+
+### Bill of materials
+
+- Added: enclosure, fans, 1 A blade fuses, WAGO 221-415, 4.8 mm receptacles, 1.5 mm² and 0.75 mm² wire, insulated trimming tool, mounting hardware, grommets, cable ties, polycarbonate sheet, optional LED-indicator fuses. Tools needed but not supplied are now listed.
+- Prices are now stated as line totals. New total **≈ CHF 400** (≈ CHF 450 with the clamp meter); the enclosure and fans account for most of the increase.
+
+### Calculator and diagrams
+
+- `tools/jbod_power.py`: validates its inputs (it used to crash on `--headers 0`, `--bays 0`, `--spinup-12v 0` and accept negative drive counts); never suggests a fuse above 10 A for the 18 AWG pigtails (it used to suggest 15 A for 2.5 A drives); explains the 5 A choice on +5 V; shows the one-blown-fuse case; new `--stagger` and `--extra-12v` options.
+- The charts now take their figures from the calculator instead of typed-in numbers.
+- Wiring diagram: 0 V–PE bond, fan circuit on fuse position 3, 1.5 mm² inlet leads, enclosure note. Board layout: inlet in the enclosure wall.
+
 ## 2026-10-19: Production drive recorded
 
 - The production drive is the **WD Ultrastar DC HC530 14 TB SATA** (`WUH721414ALE6L4`). Its datasheet startup currents (1.27 A at 12 V, 0.47 A at 5 V) are exactly the figures the design already used, so no sizing changes.

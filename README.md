@@ -13,8 +13,9 @@ Power a shelf of 3.5" SATA hard drives (a JBOD) from two industrial **Mean Well*
 | **First build** | 8 drives on one Jonsbo N3 backplane: old test drives first, then WD Ultrastar DC HC530 14 TB |
 | **12 V supply** | Mean Well RSP-200-12 (16.7 A): 61 % load at spin-up |
 | **5 V supply** | Mean Well LRS-150F-5 (22 A): 17 % load |
-| **Branch fuses** | 7.5 A on each +12 V lead, 5 A on each +5 V lead |
-| **Parts cost** | ~CHF 250 (~CHF 300 with a clamp meter), bought in Switzerland |
+| **Branch fuses** | 7.5 A on each +12 V lead, 5 A on each +5 V lead, 1 A for the drive fans |
+| **Enclosure** | Everything carrying mains sits in a closed, earthed metal enclosure. The JBOD's 0 V is bonded to earth and to the server chassis |
+| **Parts cost** | ~CHF 400 including enclosure and fans (~CHF 450 with a clamp meter), bought in Switzerland |
 | **Scales to** | 24 drives per RSP-500-12 with all drives spinning up at once, more with staggered spin-up |
 
 ## Where to start
@@ -39,10 +40,12 @@ The figures in these documents are for the **WD Ultrastar DC HC530 14 TB**: **1.
 python3 tools/jbod_power.py                               # the 8-drive build
 python3 tools/jbod_power.py --drives 10 --spinup-12v 1.8  # your own numbers
 python3 tools/jbod_power.py --drives 24 --psu12 RSP-500-12
+python3 tools/jbod_power.py --drives 30 --psu12 RSP-500-12 --stagger 8   # staggered spin-up
+python3 tools/jbod_power.py --extra-12v 0.6                               # include the fans
 python3 tools/jbod_power.py --help
 ```
 
-It prints the load on each supply, flags anything above the 75 % derating target, and suggests a branch fuse rating for each Molex header.
+It prints the load on each supply, flags anything above the 75 % derating target, and suggests a branch fuse rating for each Molex header. It warns when no fuse can protect the 18 AWG pigtails.
 
 ## Project status
 
@@ -50,7 +53,9 @@ It prints the load on each supply, flags anything above the 75 % derating target
 - [x] Bill of materials with Swiss suppliers
 - [x] Assembly and commissioning procedure
 - [ ] Parts ordered
-- [ ] Bench build without drives (voltages trimmed)
+- [ ] Built into the enclosure
+- [ ] Safety test of the AC side by an electrician
+- [ ] Bench build without drives (voltages trimmed, backplane checked)
 - [ ] 8-drive spin-up test with measurements recorded in the [test log](docs/test-log.md)
 - [ ] Long-run thermal test (24 h under load)
 

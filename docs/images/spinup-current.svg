@@ -51,14 +51,14 @@
 <line class="ref" x1="70" y1="112.07777777777778" x2="820" y2="112.07777777777778" stroke-width="1.5"/>
 <text x="830" y="112.07777777777778" class="ink" font-size="12" font-weight="700" text-anchor="start" >16.7 A</text>
 <text x="830" y="127.07777777777778" class="ink2" font-size="11" font-weight="400" text-anchor="start" >RSP-200-12 rating</text>
-<line class="ref" x1="70" y1="176.94444444444446" x2="820" y2="176.94444444444446" stroke-width="1.5"/>
-<text x="830" y="176.94444444444446" class="ink" font-size="12" font-weight="700" text-anchor="start" >12.5 A</text>
-<text x="830" y="191.94444444444446" class="ink2" font-size="11" font-weight="400" text-anchor="start" >75 % target</text>
-<polygon class="a1" points="70.0,370.0 70.0,370.0 81.2,370.0 92.5,213.1 220.0,215.6 276.2,227.9 332.5,265.0 388.8,299.0 437.5,315.2 482.5,319.8 820.0,320.6 820.0,370.0"/>
-<polyline class="s1" points="70.0,370.0 81.2,370.0 92.5,213.1 220.0,215.6 276.2,227.9 332.5,265.0 388.8,299.0 437.5,315.2 482.5,319.8 820.0,320.6" fill="none" stroke-width="2.5" stroke-linejoin="round"/>
+<line class="ref" x1="70" y1="176.55833333333334" x2="820" y2="176.55833333333334" stroke-width="1.5"/>
+<text x="830" y="176.55833333333334" class="ink" font-size="12" font-weight="700" text-anchor="start" >12.5 A</text>
+<text x="830" y="191.55833333333334" class="ink2" font-size="11" font-weight="400" text-anchor="start" >75 % target</text>
+<polygon class="a1" points="70.0,370.0 70.0,370.0 81.2,370.0 92.5,213.1 220.0,215.2 276.2,227.1 332.5,264.7 388.8,299.1 437.5,315.2 482.5,319.5 820.0,320.6 820.0,370.0"/>
+<polyline class="s1" points="70.0,370.0 81.2,370.0 92.5,213.1 220.0,215.2 276.2,227.1 332.5,264.7 388.8,299.1 437.5,315.2 482.5,319.5 820.0,320.6" fill="none" stroke-width="2.5" stroke-linejoin="round"/>
 <circle class="f1" cx="92.5" cy="213.08444444444444" r="4.5"/>
 <text x="107.5" y="191.08444444444444" class="ink" font-size="12.5" font-weight="700" text-anchor="start" >≈ 10.2 A peak</text>
-<text x="107.5" y="205.08444444444444" class="ink2" font-size="11.5" font-weight="400" text-anchor="start" >61 % of rating, 2.3 A below the 75 % target</text>
+<text x="107.5" y="205.08444444444444" class="ink2" font-size="11.5" font-weight="400" text-anchor="start" >61 % of rating, 2.4 A below the 75 % target</text>
 <text x="557.5" y="308.5777777777778" class="ink" font-size="12.5" font-weight="700" text-anchor="start" >≈ 3.2 A idle (19 %)</text>
 <text x="557.5" y="342.5777777777778" class="ink2" font-size="11.5" font-weight="400" text-anchor="start" >5 V rail: steady ≈ 3.8 A throughout (17 % of the LRS-150F-5)</text>
 <text x="317.5" y="252.62222222222223" class="ink2" font-size="11.5" font-weight="400" text-anchor="start" >platters reach speed</text>

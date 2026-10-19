@@ -5,6 +5,7 @@ from svg import (Wiring, circle, document, legend, rect, text, MUTED, INK, PART_
 
 FUSE_7A5 = "#8b5a2b"  # ATO colour code: 7.5 A brown
 FUSE_5A = "#d2b48c"   # ATO colour code: 5 A tan
+FUSE_1A = "#2b2b2b"   # ATO colour code: 1 A black
 
 w = Wiring()
 parts = []
@@ -30,6 +31,7 @@ for y, lab in [(335, "L"), (375, "N"), (415, "PE")]:
 
 # --- AC lever nuts ---------------------------------------------------------
 labels.append(text(240, 312, "WAGO 221", 11.5, 600, fill=MUTED, anchor="middle"))
+labels.append(text(115, 286, "1.5 mm² leads, 4.8 mm tabs", 11, fill=MUTED, anchor="middle"))
 for y in (335, 375, 415):
     parts.append(rect(220, y - 12, 40, 24, fill="#f6a623", stroke="#9a6206", rx=4))
 
@@ -68,22 +70,23 @@ parts.append(rect(700, 262, 205, 12, fill="#8f8f8a", stroke="#4d4d4a", rx=2))  #
 labels.append(text(724, 254, "negative bus", 11, fill=MUTED))
 for n, y in enumerate((100, 130, 160, 190, 220), start=1):
     parts.append(f'<line x1="712" y1="{y}" x2="736" y2="{y}" stroke="{PART_EDGE}" stroke-width="2"/>')
-    if n <= 2:
-        parts.append(rect(736, y - 8, 40, 16, fill=FUSE_7A5, stroke="#4a2e12", rx=3))
-        labels.append(text(756, y + 4, "7.5 A", 10.5, 700, fill="#ffffff", anchor="middle"))
+    if n <= 3:
+        colour, rating = (FUSE_7A5, "7.5 A") if n <= 2 else (FUSE_1A, "1 A")
+        parts.append(rect(736, y - 8, 40, 16, fill=colour, stroke="#1d1d1c", rx=3))
+        labels.append(text(756, y + 4, rating, 10.5, 700, fill="#ffffff", anchor="middle"))
         parts.append(f'<line x1="776" y1="{y}" x2="794" y2="{y}" stroke="{PART_EDGE}" stroke-width="2"/>')
     else:
         parts.append(rect(736, y - 8, 40, 16, fill="none", stroke="#a9a9a3", rx=3,
                           extra='stroke-dasharray="3 3"'))
     parts.append(circle(800, y, 5))
     labels.append(text(724, y - 4, str(n), 9.5, 600, fill=MUTED, anchor="middle"))
-labels.append(text(812, 194, "3–12", 11, fill=MUTED))
+labels.append(text(812, 194, "4–12", 11, fill=MUTED))
 labels.append(text(812, 208, "unused", 11, fill=MUTED))
 parts.append(circle(712, 140, 8, fill="#e0c46e", stroke="#7a5f1c"))  # + stud
 labels.append(text(694, 166, "+ stud", 11, 600, fill=MUTED, anchor="end"))
 parts.append(circle(712, 268, 9, fill="#bdbdb7", stroke="#4d4d4a"))  # − stud
 labels.append(text(712, 316, "− stud", 11, 600, fill=MUTED, anchor="middle"))
-for x in (760, 785, 810, 855, 880):
+for x in (760, 785, 810, 835, 855, 880, 900):
     parts.append(circle(x, 268, 4.5, fill="#d9d9d3", stroke="#4d4d4a"))
 
 w.add("12V", (570, 140), (704, 140))
@@ -131,6 +134,18 @@ w.add("GND", (785, 274), (785, 490), (1004, 490))
 w.add("5V", (930, 540), (975, 540), (975, 390), (1004, 390))
 w.add("5V", (930, 600), (985, 600), (985, 510), (1004, 510))
 
+# --- Fans (fuse 3, 1 A) -----------------------------------------------------
+parts.append(rect(1000, 140, 160, 110, rx=8))
+labels.append(text(1080, 166, "Drive fans", 13, 700, anchor="middle"))
+labels.append(text(1080, 184, "2 × 120 mm, 12 V", 11, fill=MUTED, anchor="middle"))
+labels.append(text(1080, 200, "≤ 0.3 A each", 11, fill=MUTED, anchor="middle"))
+w.add("12V", (806, 160), (1000, 160))
+w.add("GND", (900, 262), (900, 236), (1000, 236))
+
+# --- 0 V to PE bond ----------------------------------------------------------
+w.add("PE", (240, 427), (240, 450), (835, 450), (835, 274))
+labels.append(text(470, 443, "0 V – PE bond (2.5 mm²)", 11.5, 600, anchor="middle"))
+
 # --- Server ----------------------------------------------------------------
 parts.append(rect(960, 680, 200, 64, rx=8))
 labels.append(text(1060, 707, "Host server", 14, 700, anchor="middle"))
@@ -151,8 +166,10 @@ labels += [
 # --- Title and legend ------------------------------------------------------
 header = [
     text(30, 34, "Wiring diagram: 8-drive build", 20, 700),
-    text(30, 56, "All wire 2.5 mm² H07V-K except the 18 AWG Molex pigtails.", 12.5, fill=MUTED),
-    text(30, 74, "A hop means two wires cross without connecting.", 12.5, fill=MUTED),
+    text(30, 56, "All wire 2.5 mm² H07V-K except the inlet leads (1.5 mm²),", 12.5, fill=MUTED),
+    text(30, 74, "the Molex pigtails (18 AWG) and the fan leads.", 12.5, fill=MUTED),
+    text(30, 760, "Everything left of the Molex pigtails sits inside the earthed enclosure.", 12.5, 600, fill=INK),
+    text(30, 92, "A hop means two wires cross without connecting.", 12.5, fill=MUTED),
 ]
 key = legend(30, 790, [("L", "Live (L): brown"), ("N", "Neutral (N): blue"),
                        ("PE", "Earth (PE): green-yellow"), ("data", "SATA data cable"),
@@ -163,8 +180,8 @@ body = "\n".join(header + parts + [w.render()] + labels + [key])
 svg = document(1190, 850, body, "Wiring diagram: 8-drive build",
                "Colour-coded wiring from the Schurter mains inlet through WAGO splits to the "
                "RSP-200-12 and LRS-150F-5, then through the Blue Sea 5026 fuse block (7.5 A) and "
-               "inline 5 A fuses to Molex pigtails A1 and A2 on the Jonsbo N3 backplane, with a "
-               "ground bond to the host server.")
+               "inline 5 A fuses to Molex pigtails A1 and A2 on the Jonsbo N3 backplane. A 1 A fuse feeds the "
+               "drive fans. The negative bus is bonded to PE and to the host server's chassis.")
 
 out = os.path.join(os.path.dirname(__file__), "..", "..", "docs", "images", "wiring-diagram.svg")
 with open(out, "w") as f:

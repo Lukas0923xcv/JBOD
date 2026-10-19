@@ -4,9 +4,30 @@ Unlike the wiring diagrams these follow the viewer's light/dark preference.
 """
 
 import os
+import sys
 from svg import FONT, esc
 
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+from jbod_power import AWG18_MM2, DRIVE, FUSE_DROP, PSUS, voltage_drop  # noqa: E402
+
 OUT = os.path.join(os.path.dirname(__file__), "..", "..", "docs", "images")
+
+# The 8-drive build: currents and the wire segments of docs/03-electrical-calculations.md.
+N = 8
+PEAK12 = N * DRIVE["spinup_12v"]
+IDLE12 = N * DRIVE["idle_12v"]
+LOAD5 = N * DRIVE["logic_5v"]
+RSP = PSUS["RSP-200-12"]["amps"]
+LRS = PSUS["LRS-150F-5"]["amps"]
+GND_WIRE = (PEAK12 + LOAD5) / 2 / 2  # two pigtails, two ground wires each
+DROPS12 = [("PSU → fuse block", voltage_drop(PEAK12, 0.5, 2.5)), ("7.5 A fuse", FUSE_DROP),
+           ("pigtail +12 V", voltage_drop(PEAK12 / 2, 0.2, AWG18_MM2)),
+           ("pigtail GND", voltage_drop(GND_WIRE, 0.2, AWG18_MM2)),
+           ("return to PSU", voltage_drop(PEAK12, 0.5, 2.5))]
+DROPS5 = [("PSU → WAGO", voltage_drop(LOAD5, 0.5, 2.5)), ("5 A fuse", FUSE_DROP),
+          ("holder + pigtail", voltage_drop(LOAD5 / 2, 0.3, AWG18_MM2)),
+          ("pigtail GND", voltage_drop(GND_WIRE, 0.2, AWG18_MM2)),
+          ("return to PSU", voltage_drop(LOAD5, 0.5, 2.5))]
 
 STYLE = """<style>
   .bg { fill: #fcfcfb; stroke: #dcdbd6; }
@@ -66,40 +87,42 @@ def spinup():
     b.append(t(L - 52, T - 14, "amps", 12, "ink2"))
 
     # Reference lines, labelled at the right edge
-    for amps, label, sub in [(16.7, "16.7 A", "RSP-200-12 rating"), (12.5, "12.5 A", "75 % target")]:
+    for amps, label, sub in [(RSP, f"{RSP:g} A", "RSP-200-12 rating"),
+                             (0.75 * RSP, f"{0.75 * RSP:.1f} A", "75 % target")]:
         b.append(f'<line class="ref" x1="{L}" y1="{Y(amps)}" x2="{R}" y2="{Y(amps)}" stroke-width="1.5"/>')
         b.append(t(R + 10, Y(amps) + 0, label, 12, "ink", 700))
         b.append(t(R + 10, Y(amps) + 15, sub, 11, "ink2"))
 
-    pts = [(0, 0), (0.3, 0), (0.6, 10.16), (4.0, 10.0), (5.5, 9.2), (7.0, 6.8), (8.5, 4.6),
-           (9.8, 3.55), (11, 3.25), (20, 3.2)]
+    # Illustrative shape scaled to the peak and idle currents.
+    def amp(f):
+        return IDLE12 + (PEAK12 - IDLE12) * f
+    pts = [(0, 0), (0.3, 0), (0.6, PEAK12), (4.0, amp(0.98)), (5.5, amp(0.87)), (7.0, amp(0.52)),
+           (8.5, amp(0.20)), (9.8, amp(0.05)), (11, amp(0.01)), (20, IDLE12)]
     line = " ".join(f"{X(s):.1f},{Y(a):.1f}" for s, a in pts)
     area = f"{X(0)},{Y(0)} {line} {X(tmax)},{Y(0)}"
     b.append(f'<polygon class="a1" points="{area}"/>')
     b.append(f'<polyline class="s1" points="{line}" fill="none" stroke-width="2.5" stroke-linejoin="round"/>')
 
     # Annotations
-    b.append(f'<circle class="f1" cx="{X(0.6)}" cy="{Y(10.16)}" r="4.5"/>')
-    b.append(t(X(1.0), Y(10.16) - 22, "≈ 10.2 A peak", 12.5, "ink", 700))
-    b.append(t(X(1.0), Y(10.16) - 8, "61 % of rating, 2.3 A below the 75 % target", 11.5, "ink2"))
-    b.append(t(X(13), Y(3.2) - 12, "≈ 3.2 A idle (19 %)", 12.5, "ink", 700))
-    b.append(t(X(13), Y(3.2) + 22, "5 V rail: steady ≈ 3.8 A throughout (17 % of the LRS-150F-5)", 11.5, "ink2"))
+    b.append(f'<circle class="f1" cx="{X(0.6)}" cy="{Y(PEAK12)}" r="4.5"/>')
+    b.append(t(X(1.0), Y(PEAK12) - 22, f"≈ {PEAK12:.1f} A peak", 12.5, "ink", 700))
+    b.append(t(X(1.0), Y(PEAK12) - 8, f"{100 * PEAK12 / RSP:.0f} % of rating, "
+               f"{0.75 * RSP - PEAK12:.1f} A below the 75 % target", 11.5, "ink2"))
+    b.append(t(X(13), Y(IDLE12) - 12, f"≈ {IDLE12:.1f} A idle ({100 * IDLE12 / RSP:.0f} %)", 12.5, "ink", 700))
+    b.append(t(X(13), Y(IDLE12) + 22, f"5 V rail: steady ≈ {LOAD5:.1f} A throughout "
+               f"({100 * LOAD5 / LRS:.0f} % of the LRS-150F-5)", 11.5, "ink2"))
     b.append(t(X(6.6), Y(7.6), "platters reach speed", 11.5, "ink2"))
     return doc(W, H, "\n".join(b), "12 V current during spin-up",
-               "Line chart: 12 V current jumps to about 10.2 A at power-on, holds for about 5 seconds, "
-               "and settles to about 3.2 A idle by 10 seconds. The RSP-200-12 rating is 16.7 A and the 75 "
-               "percent target is 12.5 A.")
+               f"Line chart: 12 V current jumps to about {PEAK12:.1f} A at power-on, holds for about 5 seconds, "
+               f"and settles to about {IDLE12:.1f} A idle by 10 seconds. The RSP-200-12 rating is {RSP:g} A "
+               f"and the 75 percent target is {0.75 * RSP:.1f} A.")
 
 
 def budget():
     W, H = 1120, 440
     panels = [
-        ("+12 V rail at spin-up peak", 12.15, 11.85, 12.20, 0.05, [
-            ("PSU → fuse block", 0.036), ("7.5 A fuse", 0.05), ("pigtail +12 V", 0.022),
-            ("pigtail GND", 0.015), ("return to PSU", 0.036)]),
-        ("+5 V rail", 5.15, 4.95, 5.20, 0.05, [
-            ("PSU → WAGO", 0.013), ("5 A fuse", 0.05), ("holder + pigtail", 0.012),
-            ("pigtail GND", 0.015), ("return to PSU", 0.013)]),
+        ("+12 V rail at spin-up peak", 12.15, 11.85, 12.20, 0.05, DROPS12),
+        ("+5 V rail", 5.15, 4.95, 5.20, 0.05, DROPS5),
     ]
     b = [t(30, 36, "Voltage budget: from the trimmer to the drive", 18, weight=700),
          t(30, 58, "Calculated drops at peak load. Each axis is zoomed in: the whole budget is about 0.1–0.16 V, "
@@ -149,9 +172,11 @@ def budget():
         x += slot
         b += bar(x, level, lo, "f1", "at the drive", f"≈ {level:.2f}")
         b.append(f'<line class="axis" x1="{L}" y1="{B}" x2="{R}" y2="{B}"/>')
+    def describe(start, drops):
+        mv = ", ".join(f"{d * 1000:.0f}" for _, d in drops)
+        return f"set to {start:.2f} V, losing {mv} millivolts to arrive at about {start - sum(d for _, d in drops):.2f} V"
     return doc(W, H, "\n".join(b), "Voltage budget",
-               "Waterfall charts. 12 V: set to 12.15 V, losing 36, 50, 22, 15 and 36 millivolts to arrive at "
-               "about 11.99 V. 5 V: set to 5.15 V, losing 13, 50, 12, 15 and 13 millivolts to arrive at about 5.05 V.")
+               f"Waterfall charts. 12 V: {describe(12.15, DROPS12)}. 5 V: {describe(5.15, DROPS5)}.")
 
 
 for name, svg in [("spinup-current.svg", spinup()), ("voltage-budget.svg", budget())]:
