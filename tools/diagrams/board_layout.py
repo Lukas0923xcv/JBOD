@@ -25,8 +25,8 @@ def part(x, y, w, h, title, sub, fill, term_side=None, term_label=""):
 
 body = [
     text(30, 36, "Board layout (top view, to scale)", 20, 700),
-    text(30, 58, "Suggested placement on a 420 × 300 mm insulating board. Footprints are approximate: "
-                 "check your parts before drilling.", 12.5, fill=MUTED),
+    text(30, 58, "Suggested placement on a 420 × 300 mm insulating board, mounted inside the earthed enclosure. "
+                 "Footprints are approximate: check your parts before drilling.", 12.5, fill=MUTED),
     text(30, 76, "Keep ≥ 20 mm around each supply for airflow (dashed outline). Terminal strips face the DC side to keep runs short.",
          12.5, fill=MUTED),
 ]
@@ -43,7 +43,7 @@ for x, y, w, h in [(70, 25, 215, 115), (70, 170, 159, 97)]:
 body += part(70, 25, 215, 115, "RSP-200-12", "215 × 115 mm", "#efefea", "right", "terminals")
 body += part(70, 170, 159, 97, "LRS-150F-5", "159 × 97 mm", "#efefea", "right", "terminals")
 body += part(305, 25, 100, 150, "Blue Sea 5026", "≈ 100 × 150 mm", "#e4e4de")
-body += part(10, 40, 40, 60, "Inlet", "on bracket", "#d9d9d3")
+body += part(10, 40, 40, 60, "Inlet", "in wall", "#d9d9d3")
 for i in range(3):
     px, py = mm(18, 125 + i * 16)
     body.append(rect(px, py, 24 * S, 10 * S, fill="#f6a623", stroke="#9a6206", rx=3))
@@ -59,7 +59,7 @@ body.append(text(mm(330, 265)[0], mm(330, 265)[1], "+5 V split and inline fuses"
 ex, ey = mm(BW, 100)
 body.append(f'<path d="M{ex},{ey} l40,0" stroke="#5f5f5a" stroke-width="3" marker-end="url(#arr)"/>')
 body.append(text(ex + 46, ey - 8, "pigtails A1, A2", 11.5, 600))
-body.append(text(ex + 46, ey + 8, "to backplane", 11.5, fill=MUTED))
+body.append(text(ex + 46, ey + 8, "through a grommet", 11.5, fill=MUTED))
 ex2, ey2 = mm(BW, 150)
 body.append(f'<path d="M{ex2},{ey2} l40,0" stroke="#5f5f5a" stroke-width="3" marker-end="url(#arr)"/>')
 body.append(text(ex2 + 46, ey2 + 4, "ground bond to server", 11.5, 600))

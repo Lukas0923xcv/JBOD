@@ -22,7 +22,11 @@ The Jonsbo N3 powers all its bays at once. To stagger the spin-up you need drive
 - **PUIS** (Power-Up In Standby): the drive stays spun down until the host tells it to spin up. Your HBA or OS then spins drives up one at a time or in groups. Many drives support it, but some need a jumper or `hdparm -s1`. Check yours, and test that your controller really does spin them up.
 - **SAS backplanes or HBAs** with delayed or staggered spin-up.
 
-The peak load with staggering is roughly `idle × (drives − group) + spin-up × group`. For 30 drives in groups of 8: 0.40 × 22 + 1.27 × 8 ≈ 19 A, which is 45 % of an RSP-500-12.
+The peak load with staggering is roughly `idle × (drives − group) + spin-up × group`. For 30 drives in groups of 8: 0.40 × 22 + 1.27 × 8 ≈ 19 A, which is 45 % of an RSP-500-12. The calculator does this with `--stagger`:
+
+```sh
+python3 tools/jbod_power.py --drives 30 --psu12 RSP-500-12 --stagger 8
+```
 
 ## A 24-drive build (3 backplanes)
 
@@ -51,9 +55,11 @@ Each arrow from a fuse block to a backplane is two fused leads, one per Molex he
 |---|---|
 | **RSP-500-12** replaces the RSP-200-12 | 30.5 A peak (73 %) |
 | **6 mm² wire** (or two 2.5 mm² in parallel from separate V+ terminals) for the 12 V feed and its V− return | 30 A is more than 2.5 mm² is rated for (about 24 A) |
+| Branch fuses now do the short-circuit work on 12 V | The RSP-500-12 delivers about 44–56 A into a short (105–135 %), 6–7 × a 7.5 A fuse, so a shorted branch blows its fuse quickly instead of the supply hiccuping |
+| A bigger enclosure, and fans for all three backplanes | Check the RSP-500-12's size and height in its datasheet; it also has its own cooling fan. Size the fan fuse at 1.25 × the total fan current |
 | M5 rings for 6 mm² on the fuse block studs | Matches the wire |
 | 12 V fuses: still **7.5 A per header**, now 6 positions on the Blue Sea 5026 | Each backplane still carries 8 drives |
-| 5 V: one LRS-150F-5 is still enough (11.3 A, 51 %) | Use a **second blade fuse block** as the 5 V bus instead of 6 inline holders |
+| 5 V: one LRS-150F-5 is still enough (11.3 A, 51 %) | Use a **second blade fuse block** as the 5 V bus instead of 6 inline holders. If it has its own negative bus, join it to the first with 2.5 mm² |
 | 5 V feed: 2.5 mm² is still fine | 11.3 A |
 
 ## 60 drives (two independent loops)
@@ -85,7 +91,7 @@ Rules:
 
 1. **Each backplane is fed by exactly one loop.** Never connect two supplies to the two headers of one backplane.
 2. **Tie the negative buses of both loops together** and bond them to the server, so everything shares one 0 V.
-3. **Recheck the mains side.** Two RSP-500-12 plus two LRS-150F-5 can draw over 1 kW at peak (≈ 5 A at 230 V). The 6.3 A inlet fuses would then run close to their rating. Recalculate the inlet fuse and cord rating, and consider separate inlets per loop.
+3. **Recheck the mains side.** At their full rated output, two RSP-500-12 plus two LRS-150F-5 would draw about 7 A at 230 V (≈ 1.4 kW input, and the LRS has no PFC, so its power factor is only about 0.5). That is more than the 6.3 A inlet fuses. The real 60-drive load is much lower: per loop about 19 A × 12 V + 14.1 A × 5 V ≈ 300 W with staggered spin-up, so ≈ 3 A at 230 V for both loops. Size the inlet fuse and cord for the supplies' maximum, or give each loop its own inlet.
 4. The RSP-500-12 has a **remote on/off** input (connector CN100). It could be used to switch the 12 V supply from the server's PS_ON signal through an isolating relay or optocoupler. Check the RSP-500 datasheet for the pinout and logic levels before you wire it.
 
 Back to the [README](../README.md)
